@@ -17,10 +17,19 @@
   justify-content: space-around;
   font-size: calc(10px + 2vmin);
   color: #61dafb;
+  list-style-type: none;
 }
 
 .App ul a {
   color: #61dafb;
+  list-style-type: none;
+  outline: none;
+  text-decoration: none;
+}
+
+.App ul a:hover {
+  color: #af122d;
+  outline: none;
 }
 
 @keyframes App-logo-spin {
@@ -32,7 +41,7 @@
   }
 }
 
-.header {
+header {
   display: flex;
   justify-content: center;
   align-items: center;

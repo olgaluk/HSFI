@@ -3,8 +3,6 @@ import axios from 'axios';
 import { Link } from "react-router-dom";
 import './Signin.css';
 
-let some = '';
-
 class Signin extends React.Component {
   constructor(props) {
     super(props);
@@ -14,6 +12,7 @@ class Signin extends React.Component {
     this.state = {
       email: '',
       password: '',
+      user: null,
     };
   }
 
@@ -24,7 +23,7 @@ class Signin extends React.Component {
     })
       .then(function (response) {
         if (response.data === 'success') {
-          some = `yes`;
+          window.location.assign('http://localhost:3000/home2');
         }
       })
       .catch(function (error) {
@@ -32,10 +31,10 @@ class Signin extends React.Component {
       });
   }
   handleEmailChange(e) {
-    this.setState({ email: e.target.value })
+    this.setState({ email: e.target.value });
   }
   handlePasswordChange(e) {
-    this.setState({ password: e.target.value })
+    this.setState({ password: e.target.value });
   }
 
   render() {
@@ -48,14 +47,12 @@ class Signin extends React.Component {
           <label for="inputPassword" className="sr-only">Password</label>
           <input type="password" onChange={this.handlePasswordChange} id="inputPassword" className="form-control" placeholder="Password" required />
 
-          <button className="btn btn-lg btn-primary btn-block" onClick={this.signIn} type="button">Sign in</button>
+          <button onClick={this.signIn} type="button">Sign in</button>
         </form>
         <div>
           <Link to="/signup">Signup</Link>
         </div>
-        <h2>{some}</h2>
       </div>
-
     )
   }
 }

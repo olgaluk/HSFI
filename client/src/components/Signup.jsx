@@ -38,7 +38,7 @@ class Signup extends React.Component {
       .then(function (response) {
         console.log(response);
         if (response.data === 'success') {
-          //
+          window.location.assign('http://localhost:3000/signin');
         }
       })
       .catch(function (error) {
@@ -58,13 +58,12 @@ class Signup extends React.Component {
           <label for="inputPassword" className="sr-only">Password</label>
           <input type="password" onChange={this.handlePasswordChange} id="inputPassword" className="form-control" placeholder="Password" required />
 
-          <button className="btn btn-lg btn-primary btn-block" onClick={this.signUp} type="button">Sign up</button>
+          <button onClick={this.signUp} type="button">Sign up</button>
         </form>
         <div>
           <Link to="/signin">Signin</Link>
         </div>
       </div>
-
     )
   }
 }

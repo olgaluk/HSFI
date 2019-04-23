@@ -1,49 +1,64 @@
 import React, { Component } from 'react';
-import './App.css';
+
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
 import Signin from './components/Signin';
 import Signup from './components/Signup';
+import Home from './components/Home';
+import Home2 from './components/Home2';
 import logo from './images/Fresh.png';
 
+import { connect } from 'react-redux';
+import { simpleAction } from './actions/simpleAction';
+
+import './App.css';
+
+const mapStateToProps = state => ({
+  ...state
+});
+
+const mapDispatchToProps = dispatch => ({
+  simpleAction: () => dispatch(simpleAction())
+});
+
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: null
-    };
+  simpleAction = (event) => {
+    this.props.simpleAction();
+  };
 
-    this.setState = this.setState.bind(this);
-  }
-
-  updateUser = (value) => {
-    this.setState({ user: value })
-  } 
-  
   render() {
     return (
-      <Router>
-        <div className="App">
-          <header className="header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/signin">Signin</Link>
-              </li>
-              <li>
-                <Link to="/signup">Signup</Link>
-              </li>
-            </ul>
-          </header>
+      //<Router>
+      <div className="App">
+        <header className="header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/signin">Signin</Link>
+            </li>
+            <li>
+              <Link to="/signup">Signup</Link>
+            </li>
+          </ul>
+        </header>
+        <Route exact component={Home} path="/"></Route>
+        <Route exact component={Signin} path="/signin"></Route>
+        <Route exact component={Signup} path="/signup"></Route>
+        <Route exact component={Home2} path="/home2"></Route>
 
-          <Route component={Signin} path="/signin"></Route>
-          <Route component={Signup} path="/signup"></Route>
-        </div>
-      </Router>
+        <button onClick={this.simpleAction}>Test redux action</button>
+        <pre>
+          {
+            JSON.stringify(this.props)
+          }
+        </pre>
+      </div>
+      //</Router>
     );
   }
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);

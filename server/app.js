@@ -55,6 +55,7 @@ app.post('/signup', (req, res) => {
 
   if (name && email && password) {
     user.signup(name, email, password);
+    res.send('success');
   } else {
     res.send('Failure');
   }
