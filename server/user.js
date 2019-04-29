@@ -4,13 +4,15 @@ const assert = require('assert');
 const url = 'mongodb://localhost:27017/Healthy';
 
 module.exports = {
-  signup(name, email, password) {
+  signup(name, email, password, phone, country) {
     MongoClient.connect(url, (err, datab) => {
       const db = datab.db('Healthy');
       db.collection('user').insertOne({
         name,
         email,
         password,
+        phone,
+        country,
       }, (err, result) => {
         assert.equal(err, null);
         console.log('Saved the user sign up details.');

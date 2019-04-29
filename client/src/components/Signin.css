@@ -1,6 +1,44 @@
+.signin {
+  width: 100%;
+}
+
 .form-signin {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  font-size: 1.2em;
+}
+
+button {
+  width: 150px;
+  margin: 10px;
+  padding-bottom: 2px;
+  border: 1px solid #3d837f;
+  background: #3a8a87;
+  background: -webkit-linear-gradient(left, #1b413f, #3a8a87);
+  -webkit-border-radius: 40px;
+  border-radius: 40px;
+  color: #ffffff;
+  font-size: 18px;
+  text-decoration: none;
+  vertical-align: middle;
+}
+
+button:focus {
+  outline: none;
+}
+
+button:hover {
+  outline: none;
+  cursor: pointer;
+  color: #39b54a;
+}
+
+.form-label-signin {
+  margin: 5px auto;
+}
+
+.form-control {
+  height: 30px;
 }

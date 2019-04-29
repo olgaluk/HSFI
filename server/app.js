@@ -52,9 +52,11 @@ app.post('/signup', (req, res) => {
   const name = req.body.name;
   const email = req.body.email;
   const password = req.body.password;
+  const phone = req.body.phone;
+  const country = req.body.country;
 
-  if (name && email && password) {
-    user.signup(name, email, password);
+  if (name && email && password && country) {
+    user.signup(name, email, password, phone, country);
     res.send('success');
   } else {
     res.send('Failure');

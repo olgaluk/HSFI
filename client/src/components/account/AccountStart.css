@@ -1,0 +1,13 @@
+.button-position {
+  width: 170px;
+  height: 45px;  
+  margin: 10px;
+  padding-bottom: 2px;
+  border: 1px solid #3d837f;
+  background: #946990;
+  border-radius: 0;
+  color: #ffffff;
+  font-size: 1em;
+  text-decoration: none;
+  vertical-align: middle;
+}

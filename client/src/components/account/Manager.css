@@ -1,0 +1,28 @@
+.signup-manager {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-signup-manager {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid black;
+}
+
+.signup-manager-heading {
+  width: 100%;
+  margin-top: 0px;
+  padding: 5px 0;
+  background-color: darkslategrey;
+  font-weight: 400;
+  color: #ffffff;
+}
+
+.form-control-manager {
+  width: 170px;
+  height: 25px;
+  margin: 5px 10px;
+}
