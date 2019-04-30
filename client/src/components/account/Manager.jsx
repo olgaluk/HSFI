@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import { Link } from "react-router-dom";
 
 import SelectCountry from './SelectCountry';
 
@@ -69,14 +68,14 @@ class Manager extends React.Component {
       <div className="signup-manager">
         <h2>Please fill out the form</h2>
         <form className="form-signup-manager">
-          <h3 className="signup-manager-heading">FAO Managers</h3>
-          <input type="name" onChange={this.handleNameChange} id="inputName" className="form-control-manager" placeholder="Name" required autofocus />
+          <h3 className="signup-manager-heading">FAO Manager</h3>
+          <input type="text" onChange={this.handleNameChange} id="inputName" className="form-control-manager" placeholder="Name" required />
           <select id="inputOffice" name="offices" className="form-control-manager" required>
             <option value="HQ">HQ</option>
             <option value="Country list">Country list</option>
           </select>
           <SelectCountry />
-          <input type="phone" onChange={this.handlePhoneChange} id="inputPhone" className="form-control-manager" placeholder="Phone" autofocus />
+          <input type="tel" onChange={this.handlePhoneChange} id="inputPhone" className="form-control-manager" placeholder="Phone" />
           <input type="email" onChange={this.handleEmailChange} id="inputEmail" className="form-control-manager" placeholder="Email" required />
           <input type="password" onChange={this.handlePasswordChange} id="inputPassword" className="form-control-manager" placeholder="Password" required />
         </form>

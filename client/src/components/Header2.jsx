@@ -18,7 +18,7 @@ class Header2 extends Component {
               <Link to="/home2/show">Form</Link>
             </li>
             <li>
-              <Link to="/"><i class="fas fa-sign-out-alt"></i> Sign out</Link>
+              <Link to="/"><i className="fas fa-sign-out-alt"></i> Sign out</Link>
             </li>
           </ul>
         </header>

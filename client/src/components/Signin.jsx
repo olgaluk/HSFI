@@ -46,7 +46,7 @@ class Signin extends React.Component {
         <form className="form-signin">
           <h2 className="form-signin-heading">Please sign in</h2>
           <label for="inputEmailSignin" className="form-label-signin">Email address</label>
-          <input type="email" onChange={this.handleEmailChange} id="inputEmailSignin" className="form-control" placeholder="Email address" required autofocus />
+          <input type="email" onChange={this.handleEmailChange} id="inputEmailSignin" className="form-control" placeholder="Email address" required />
           <label for="inputPasswordSignin" className="form-label-signin">Password</label>
           <input type="password" onChange={this.handlePasswordChange} id="inputPasswordSignin" className="form-control" placeholder="Password" required />
 

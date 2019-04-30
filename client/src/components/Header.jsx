@@ -12,13 +12,13 @@ class Header extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <ul>
             <li>
-              <Link to="/"><i class="fas fa-home"></i> Home</Link>
+              <Link to="/"><i className="fas fa-home"></i> Home</Link>
             </li>
             <li>
-              <Link to="/signin"><i class="fas fa-sign-in-alt"></i> Sign in</Link>
+              <Link to="/signin"><i className="fas fa-sign-in-alt"></i> Sign in</Link>
             </li>
             <li>
-              <Link to="/signup"><i class="fas fa-user-plus"></i> Sign up</Link>
+              <Link to="/signup"><i className="fas fa-user-plus"></i> Sign up</Link>
             </li>
           </ul>
         </header>

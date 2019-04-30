@@ -55,7 +55,7 @@ app.post('/signup', (req, res) => {
   const phone = req.body.phone;
   const country = req.body.country;
 
-  if (name && email && password && country) {
+  if (name && email && password) {
     user.signup(name, email, password, phone, country);
     res.send('success');
   } else {

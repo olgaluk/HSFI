@@ -1,25 +1,27 @@
 import React from 'react';
 import Select from 'react-select';
 
-import country from './country.json';
+import './SelectTask.css';
 
-import './SelectCountry.css';
+const tasks = ["Vendor registration", "Scratch card desk", "Hotline", "Inspection"];
 
-const options = country.map((elem) => {
+const options = tasks.map((elem) => {
   return {
-    value: String(elem.name),
-    label: elem.name
+    value: String(elem),
+    label: elem
   };
 });
 
-class SelectCountry extends React.Component {
+class SelectTask extends React.Component {
   state = {
     selectedOption: null,
   }
+
   handleChange = (selectedOption) => {
     this.setState({ selectedOption });
     console.log(`Option selected:`, selectedOption);
   }
+
   render() {
     const { selectedOption } = this.state;
 
@@ -28,10 +30,11 @@ class SelectCountry extends React.Component {
         value={selectedOption}
         onChange={this.handleChange}
         options={options}
-        placeholder="Country"
+        placeholder="Task"
+        isMulti
       />
     );
   }
 }
 
-export default SelectCountry;
+export default SelectTask;
