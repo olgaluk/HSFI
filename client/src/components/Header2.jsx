@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import logo from '../images/logo.png';
-import './Header.css';
+import './Header2.css';
 
 class Header2 extends Component {
 
@@ -12,7 +12,19 @@ class Header2 extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <ul>
             <li>
-              <Link to="/home2">Home2</Link>
+              <Link to="/home2">Vendor registration desk</Link>
+            </li>
+            <li>
+              <Link to="/home2">Scratch card desk</Link>
+            </li>
+            <li>
+              <Link to="/home2">Hotline</Link>
+            </li>
+            <li>
+              <Link to="/home2">Inspection desk</Link>
+            </li>
+            <li>
+              <Link to="/home2">Report</Link>
             </li>
             <li>
               <Link to="/home2/show">Form</Link>

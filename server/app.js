@@ -1,6 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-// import bodyParser from 'body-parser';
+
+const mongoose = require('mongoose');
+
+const { Schema } = mongoose;
 
 const session = require('express-session');
 
@@ -10,6 +13,7 @@ const post = require('./post.js');
 
 const app = express();
 
+const jsonParser = express.json();
 
 app.use(session({
   secret: 'keyboard cat',
@@ -17,8 +21,8 @@ app.use(session({
   saveUninitialized: true,
   cookie: { secure: false },
 }));
-let sessions;
 
+let sessions;
 
 app.use(express.static(path.join(__dirname, '/html')));
 
@@ -38,25 +42,32 @@ app.get('/home', (req, res) => {
 
 app.post('/signin', (req, res) => {
   sessions = req.session;
-  const username = req.body.email;
-  const password = req.body.password;
-  user.validateSignIn(username, password, (result) => {
+  const { email, password } = req.body;
+  user.validateSignIn(email, password, (result) => {
     if (result) {
-      sessions.username = username;
-      res.send('success');
+      sessions.username = email;
+      console.log(result);
+      res.send(result);
+    } else {
+      res.send(result);
     }
   });
 });
 
 app.post('/signup', (req, res) => {
-  const name = req.body.name;
-  const email = req.body.email;
-  const password = req.body.password;
-  const phone = req.body.phone;
-  const country = req.body.country;
+  const {
+    position,
+    name,
+    email,
+    password,
+    phone,
+    country,
+    organization,
+    task,
+  } = req.body;
 
   if (name && email && password) {
-    user.signup(name, email, password, phone, country);
+    user.signup(position, name, email, password, phone, country, organization, task);
     res.send('success');
   } else {
     res.send('Failure');
@@ -64,8 +75,7 @@ app.post('/signup', (req, res) => {
 });
 
 app.post('/addpost', (req, res) => {
-  const title = req.body.title;
-  const subject = req.body.subject;
+  const { title, subject } = req.body;
   post.addPost(title, subject, (result) => {
     res.send(result);
   });

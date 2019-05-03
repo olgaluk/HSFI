@@ -5,6 +5,17 @@ import country from './country.json';
 
 import './SelectCountry.css';
 
+import { addCountry } from '../../actions/simpleAction';
+import { connect } from 'react-redux';
+
+const mapStateToProps = state => ({
+  ...state
+});
+
+const mapDispatchToProps = dispatch => ({
+  addCountry: (country) => dispatch(addCountry(country))
+});
+
 const options = country.map((elem) => {
   return {
     value: String(elem.name),
@@ -13,13 +24,16 @@ const options = country.map((elem) => {
 });
 
 class SelectCountry extends React.Component {
+
   state = {
     selectedOption: null,
   }
+
   handleChange = (selectedOption) => {
     this.setState({ selectedOption });
-    console.log(`Option selected:`, selectedOption);
+    this.props.addCountry(selectedOption.value);
   }
+
   render() {
     const { selectedOption } = this.state;
 
@@ -34,4 +48,4 @@ class SelectCountry extends React.Component {
   }
 }
 
-export default SelectCountry;
+export default connect(mapStateToProps, mapDispatchToProps)(SelectCountry);

@@ -7,23 +7,9 @@ import Signup from './components/Signup';
 import Home from './components/Home';
 import Home2 from './components/Home2';
 
-import { connect } from 'react-redux';
-import { simpleAction } from './actions/simpleAction';
-
 import './App.css';
 
-const mapStateToProps = state => ({
-  ...state
-});
-
-const mapDispatchToProps = dispatch => ({
-  simpleAction: () => dispatch(simpleAction())
-});
-
 class App extends Component {
-  simpleAction = (event) => {
-    this.props.simpleAction();
-  };
 
   render() {
     return (
@@ -34,15 +20,9 @@ class App extends Component {
           <Route component={Signup} path="/signup"></Route>
           <Route component={Home2} path="/home2"></Route>
         </Switch>
-        <button onClick={this.simpleAction}>Test redux action</button>
-        <pre>
-          {
-            JSON.stringify(this.props)
-          }
-        </pre>
       </div>
     );
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

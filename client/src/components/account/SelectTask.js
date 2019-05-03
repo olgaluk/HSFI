@@ -1,7 +1,18 @@
 import React from 'react';
 import Select from 'react-select';
 
+import { connect } from 'react-redux';
+import { addTask } from '../../actions/simpleAction';
+
 import './SelectTask.css';
+
+const mapStateToProps = state => ({
+  ...state
+});
+
+const mapDispatchToProps = dispatch => ({
+  addTask: (task) => dispatch(addTask(task))
+});
 
 const tasks = ["Vendor registration", "Scratch card desk", "Hotline", "Inspection"];
 
@@ -19,7 +30,9 @@ class SelectTask extends React.Component {
 
   handleChange = (selectedOption) => {
     this.setState({ selectedOption });
-    console.log(`Option selected:`, selectedOption);
+    this.props.addTask(selectedOption.map((elem) => {
+      return elem.value;
+    }));
   }
 
   render() {
@@ -37,4 +50,4 @@ class SelectTask extends React.Component {
   }
 }
 
-export default SelectTask;
+export default connect(mapStateToProps, mapDispatchToProps)(SelectTask);
