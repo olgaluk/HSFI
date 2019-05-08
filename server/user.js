@@ -1,43 +1,40 @@
-const { MongoClient } = require('mongodb');
-const assert = require('assert');
+const mongoose = require('mongoose');
+const crypto = require('crypto');
 
-const url = 'mongodb://localhost:27017/Healthy';
+const db = mongoose.connect('mongodb://localhost:27017/Healthy');
+const User = require('./db/models/User.js');
 
-module.exports = {
-  signup(position, name, email, password, phone, country, organization, task) {
-    MongoClient.connect(url, (err, datab) => {
-      const db = datab.db('Healthy');
-      db.collection('user').insertOne({
-        position,
-        name,
-        email,
-        password,
-        phone,
-        country,
-        organization,
-        task,
-      }, (err, result) => {
-        assert.equal(err, null);
-        console.log('Saved the user sign up details.');
-      });
+function hash(text) {
+  return crypto.createHash('sha1')
+    .update(text).digest('base64');
+}
+
+exports.createUser = (userData) => {
+  const user = {
+    position: userData.position,
+    name: userData.name,
+    email: userData.email,
+    password: hash(userData.password),
+    phone: userData.phone,
+    organization: userData.organization,
+    task: userData.task,
+    country: userData.country,
+  };
+  return new User(user).save();
+};
+
+exports.getUser = (id) => {
+  return User.findOne(id);
+};
+
+exports.checkUser = (userData) => {
+  return User
+    .findOne({ email: userData.email })
+    .then((doc) => {
+      if (doc.password === hash(userData.password)) {
+        console.log('User password is ok');
+        return Promise.resolve(doc);
+      }
+      return Promise.reject('Error wrong');
     });
-  },
-  validateSignIn(username, password, callback) {
-    MongoClient.connect(url, (err, datab) => {
-      const db = datab.db('Healthy');
-      console.log(username, password);
-      db.collection('user').findOne({
-        email: username, password,
-      }, (err, user) => {
-        if (user == null) {
-          console.log('returning false');
-          callback(false);
-        } else {
-          console.log('returning true');
-          callback(user);
-        }
-      });
-    });
-  },
-
 };

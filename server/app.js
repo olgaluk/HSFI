@@ -3,26 +3,28 @@ const bodyParser = require('body-parser');
 
 const mongoose = require('mongoose');
 
-const { Schema } = mongoose;
-
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
 const path = require('path');
 const user = require('./user.js');
-const post = require('./post.js');
+// const post = require('./post.js');
 
 const app = express();
 
-const jsonParser = express.json();
-
 app.use(session({
-  secret: 'keyboard cat',
+  secret: 'some big panda',
+  store: new MongoStore({
+    url: 'mongodb://localhost:27017/Healthy',
+  }),
   resave: false,
-  saveUninitialized: true,
-  cookie: { secure: false },
+  saveUninitialized: false,
+  cookie: {
+    secure: false,
+  },
 }));
 
-let sessions;
+// let sessions;
 
 app.use(express.static(path.join(__dirname, '/html')));
 
@@ -32,29 +34,46 @@ app.get('/', (req, res) => {
   res.sendFile(`${__dirname}/html/index.html`);
 });
 
-app.get('/home', (req, res) => {
+/* app.get('/home', (req, res) => {
   if (sessions && sessions.username) {
     res.sendFile(`${__dirname}/html/home.html`);
   } else {
     res.send('unauthorized');
   }
 });
+*/
+app.post('/signin', (req, res, next) => {
+  if (req.session.user) return res.send(req.session.user);
 
-app.post('/signin', (req, res) => {
-  sessions = req.session;
-  const { email, password } = req.body;
-  user.validateSignIn(email, password, (result) => {
-    if (result) {
-      sessions.username = email;
-      console.log(result);
-      res.send(result);
-    } else {
-      res.send(result);
-    }
-  });
+  user.checkUser(req.body)
+    .then((users) => {
+      if (users) {
+        req.session.user = { id: users._id, name: users.name };
+        console.log(req.session.user);
+        res.send(users);
+      } else {
+        return next(error);
+      }
+    })
+    .catch(error => next(error));
 });
 
-app.post('/signup', (req, res) => {
+app.post('/signup', (req, res, next) => {
+  user.createUser(req.body)
+    .then((result) => {
+      console.log(result);
+      console.log('User created');
+      res.send('success');
+    })
+    .catch((err) => {
+      if (err.toJSON().code === 11000) {
+        res.status(500).send('This email already exist');
+      }
+    });
+});
+
+
+/* app.post('/signup', (req, res) => {
   const {
     position,
     name,
@@ -85,7 +104,7 @@ app.post('/getpost', (req, res) => {
   post.getPost((result) => {
     res.send(result);
   });
-});
+}); */
 
 
 app.listen(7777, () => {

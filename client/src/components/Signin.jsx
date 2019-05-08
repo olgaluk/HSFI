@@ -86,24 +86,22 @@ class Signin extends React.Component {
     })
       .then(function (response) {
         if (response.data) {
-          console.log(response.data);
-          self.addPosition(response.data.position);
+          //console.log(response.data);
+          /*self.addPosition(response.data.position);
           self.addName(response.data.name);
           self.addEmail(response.data.email);
           self.addPassword(response.data.password);
           self.addPhone(response.data.phone);
           self.addOrganization(response.data.organization);
           self.addTask(response.data.task);
-          self.addCountry(response.data.country);
+          self.addCountry(response.data.country);*/
           if (response.data.position === 'сoordinator') {
-            window.location.assign('http://localhost:3000/home2');
+            window.location.assign('http://localhost:3000/main');
           }
-          
-        } else {
-          self.setState({ response: 'Incorrect email or password!!!' });
         }
       })
       .catch(function (error) {
+        self.setState({ response: 'Incorrect email or password!!!' });
         console.log(error);
       });
   }

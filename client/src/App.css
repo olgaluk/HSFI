@@ -16,31 +16,6 @@
   pointer-events: none;
 }
 
-.App ul {
-  background-color: #775e75;
-  width: 70%;
-  min-height: 10vh;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  font-size: calc(10px + 2vmin);
-  color: #61dafb;
-  list-style-type: none;
-}
-
-.App ul a {
-  font-size: 1.2em;
-  color: #39b54a;
-  list-style-type: none;
-  outline: none;
-  text-decoration: none;
-}
-
-.App ul a:hover {
-  color: #3a8a87;
-  outline: none;
-}
-
 @keyframes App-logo-spin {
   0% {
     transform: scale(0.9);
@@ -58,5 +33,6 @@ header {
   justify-content: center;
   align-items: center;
   width: 100%;
+  margin-bottom: 25px;
   background-color: #775e75;
 }

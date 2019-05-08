@@ -97,7 +97,7 @@ class Coordinator extends React.Component {
         <pre>
           <marquee>
             {
-              JSON.stringify(this.props.simpleReducer)
+              JSON.stringify(this.props)
             }
           </marquee>
         </pre>

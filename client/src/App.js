@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import Signin from './components/Signin';
 import Signup from './components/Signup';
 import Home from './components/Home';
-import Home2 from './components/Home2';
+import Main from './components/Main';
 
 import './App.css';
 
@@ -18,7 +18,7 @@ class App extends Component {
           <Route exact component={Home} path="/"></Route>
           <Route component={Signin} path="/signin"></Route>
           <Route component={Signup} path="/signup"></Route>
-          <Route component={Home2} path="/home2"></Route>
+          <Route component={Main} path="/main"></Route>
         </Switch>
       </div>
     );
