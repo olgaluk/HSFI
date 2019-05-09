@@ -26,15 +26,3 @@ exports.createUser = (userData) => {
 exports.getUser = (id) => {
   return User.findOne(id);
 };
-
-exports.checkUser = (userData) => {
-  return User
-    .findOne({ email: userData.email })
-    .then((doc) => {
-      if (doc.password === hash(userData.password)) {
-        console.log('User password is ok');
-        return Promise.resolve(doc);
-      }
-      return Promise.reject('Error wrong');
-    });
-};

@@ -1,17 +1,67 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 
 const mongoose = require('mongoose');
 
 const session = require('express-session');
+const bodyParser = require('body-parser');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 const MongoStore = require('connect-mongo')(session);
 
 const path = require('path');
+const crypto = require('crypto');
 const user = require('./user.js');
+const User = require('./db/models/User.js');
 // const post = require('./post.js');
 
 const app = express();
 
+function authenticationMiddleware() {
+  return function (req, res, next) {
+    if (req.isAuthenticated()) {
+      return next();
+    }
+    res.redirect('/');
+  };
+}
+
+function hash(text) {
+  return crypto.createHash('sha1')
+    .update(text).digest('base64');
+}
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+  User.findById(id, (err, user) => {
+    done(err, user);
+  });
+});
+
+passport.use(new LocalStrategy(
+  {
+    usernameField: 'email',
+    passwordField: 'password',
+  },
+  ((username, password, done) => {
+    User.findOne({ email: username }, (err, user) => {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false);
+      }
+      if (user.password !== hash(password)) {
+        return done(null, false);
+      }
+      return done(null, user);
+    });
+  }),
+));
+
+passport.authenticationMiddleware = authenticationMiddleware;
+
+app.use(express.static(path.join(__dirname, '/html')));
 app.use(session({
   secret: 'some big panda',
   store: new MongoStore({
@@ -23,10 +73,9 @@ app.use(session({
     secure: false,
   },
 }));
-
-// let sessions;
-
-app.use(express.static(path.join(__dirname, '/html')));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(bodyParser.json());
 
@@ -40,22 +89,20 @@ app.get('/', (req, res) => {
   } else {
     res.send('unauthorized');
   }
-});
-*/
-app.post('/signin', (req, res, next) => {
-  if (req.session.user) return res.send(req.session.user);
+}); */
 
-  user.checkUser(req.body)
-    .then((users) => {
-      if (users) {
-        req.session.user = { id: users._id, name: users.name };
-        console.log(req.session.user);
-        res.send(users);
-      } else {
-        return next(error);
-      }
-    })
-    .catch(error => next(error));
+
+/* app.get('/main', passport.authenticationMiddleware(), renderMail);
+ */
+
+/* app.post('/signin', passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/main',
+})); */
+
+app.post('/signin', passport.authenticate('local'),
+  (req, res) => {
+    res.send(req.user);
 });
 
 app.post('/signup', (req, res, next) => {
@@ -73,26 +120,7 @@ app.post('/signup', (req, res, next) => {
 });
 
 
-/* app.post('/signup', (req, res) => {
-  const {
-    position,
-    name,
-    email,
-    password,
-    phone,
-    country,
-    organization,
-    task,
-  } = req.body;
-
-  if (name && email && password) {
-    user.signup(position, name, email, password, phone, country, organization, task);
-    res.send('success');
-  } else {
-    res.send('Failure');
-  }
-});
-
+/*
 app.post('/addpost', (req, res) => {
   const { title, subject } = req.body;
   post.addPost(title, subject, (result) => {
