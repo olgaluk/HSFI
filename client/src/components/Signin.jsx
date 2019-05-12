@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { withRouter } from 'react-router';
 import axios from 'axios';
 
 import Header from './Header';
@@ -13,7 +14,8 @@ import {
   addPhone,
   addOrganization,
   addTask,
-  addCountry
+  addCountry,
+  changeIsLogin
 } from '../actions/simpleAction';
 import { connect } from 'react-redux';
 
@@ -29,7 +31,8 @@ const mapDispatchToProps = dispatch => ({
   addPhone: (phone) => dispatch(addPhone(phone)),
   addOrganization: (organization) => dispatch(addOrganization(organization)),
   addTask: (task) => dispatch(addTask(task)),
-  addCountry: (country) => dispatch(addCountry(country))
+  addCountry: (country) => dispatch(addCountry(country)),
+  changeIsLogin: (isLoggedIn) => dispatch(changeIsLogin(isLoggedIn))
 });
 
 class Signin extends React.Component {
@@ -78,6 +81,20 @@ class Signin extends React.Component {
     this.props.addCountry(e);
   }
 
+  changeIsLogin = (isLoggedIn) => {
+    this.props.changeIsLogin(isLoggedIn);
+  }
+
+  componentDidUpdate() {
+    if (this.state.response === 'true') {
+      if (!this.props.simpleReducer.isLoggedIn) {
+        this.changeIsLogin(true);
+      }
+      this.props.history.push('/main');
+      console.log('path from history: ', this.props.history);
+    }
+  }
+
   signIn() {
     const self = this;
     axios.post('/signin', {
@@ -86,20 +103,19 @@ class Signin extends React.Component {
     })
       .then(function (response) {
         if (response.data) {
-          //console.log(response.data);
-          /*self.addPosition(response.data.position);
+          console.log(response.data);
+          self.addPosition(response.data.position);
           self.addName(response.data.name);
           self.addEmail(response.data.email);
           self.addPassword(response.data.password);
           self.addPhone(response.data.phone);
           self.addOrganization(response.data.organization);
           self.addTask(response.data.task);
-          self.addCountry(response.data.country);*/
-          if (response.data.position === 'сoordinator') {
-            window.location.assign('http://localhost:3000/main');
-          }
+          self.addCountry(response.data.country);
+          self.setState({ response: 'true' });
         }
-      })
+      }
+      )
       .catch(function (error) {
         self.setState({ response: 'Incorrect email or password!!!' });
         console.log(error);
@@ -121,9 +137,9 @@ class Signin extends React.Component {
         <form className="form-signin">
           <h2 className="form-signin-heading">Please sign in</h2>
           <h3>{this.state.response}</h3>
-          <label for="inputEmailSignin" className="form-label-signin">Email address</label>
+          <label htmlFor="inputEmailSignin" className="form-label-signin">Email address</label>
           <input type="email" onChange={this.handleEmailChange} id="inputEmailSignin" className="form-control" placeholder="Email address" required />
-          <label for="inputPasswordSignin" className="form-label-signin">Password</label>
+          <label htmlFor="inputPasswordSignin" className="form-label-signin">Password</label>
           <input type="password" onChange={this.handlePasswordChange} id="inputPasswordSignin" className="form-control" placeholder="Password" required />
 
           <button onClick={this.signIn} type="button">Sign in</button>
@@ -131,16 +147,9 @@ class Signin extends React.Component {
         <div>
           <Link to="/signup"><button type="button">Create account</button></Link>
         </div>
-        <pre>
-          <marquee>
-            {
-              JSON.stringify(this.props.simpleReducer)
-            }
-          </marquee>
-        </pre>
       </div>
     )
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Signin);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Signin));

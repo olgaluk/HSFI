@@ -1,4 +1,5 @@
 const initialState = {
+  isLoggedIn: false,
   position: '',
   name: '',
   email: '',
@@ -57,6 +58,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         task: action.task
+      }
+
+      case 'CHANGE_ISLOGIN':
+      return {
+        ...state,
+        isLoggedIn: action.isLoggedIn
       }
 
     default:

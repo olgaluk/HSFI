@@ -79,11 +79,11 @@ app.use(passport.session());
 
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
+/* app.get('/', (req, res) => {
   res.sendFile(`${__dirname}/html/index.html`);
 });
 
-/* app.get('/home', (req, res) => {
+ app.get('/home', (req, res) => {
   if (sessions && sessions.username) {
     res.sendFile(`${__dirname}/html/home.html`);
   } else {
@@ -103,7 +103,7 @@ app.get('/', (req, res) => {
 app.post('/signin', passport.authenticate('local'),
   (req, res) => {
     res.send(req.user);
-});
+  });
 
 app.post('/signup', (req, res, next) => {
   user.createUser(req.body)
@@ -118,6 +118,13 @@ app.post('/signup', (req, res, next) => {
       }
     });
 });
+
+app.get('/main',
+  (req, res) => {
+    req.session.destroy((err) => {
+      res.send('ok');
+    });
+  });
 
 
 /*

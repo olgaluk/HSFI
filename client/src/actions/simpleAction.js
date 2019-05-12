@@ -53,3 +53,10 @@ export const addTask = (task) => dispatch => {
     task
   })
 }
+
+export const changeIsLogin = (isLoggedIn) => dispatch => {
+  dispatch({
+    type: 'CHANGE_ISLOGIN',
+    isLoggedIn
+  })
+}

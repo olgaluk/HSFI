@@ -94,13 +94,6 @@ class Coordinator extends React.Component {
           <input type="password" onChange={this.addPassword.bind(this)} id="inputPassword" className="form-control-сoordinator" placeholder="Password" required />
         </form>
         <button onClick={this.signUp} type="button">Sign up</button>
-        <pre>
-          <marquee>
-            {
-              JSON.stringify(this.props)
-            }
-          </marquee>
-        </pre>
       </div>
     )
   }

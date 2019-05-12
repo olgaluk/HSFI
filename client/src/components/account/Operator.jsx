@@ -91,13 +91,6 @@ class Operator extends React.Component {
           <SelectTask />
         </form>
         <button onClick={this.signUp} type="button">Sign up</button>
-        <pre>
-          <marquee>
-            {
-              JSON.stringify(this.props.simpleReducer)
-            }
-          </marquee>
-        </pre>
       </div >
     )
   }

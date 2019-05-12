@@ -1,11 +1,22 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+// import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 import Show from './Show';
 import HeaderMain from './main/HeaderMain';
 import Home from './Home';
 
 import './Main.css';
+
+import { connect } from 'react-redux';
+
+const mapStateToProps = state => ({
+  ...state
+});
+
+const mapDispatchToProps = dispatch => ({
+ 
+});
 
 class Main extends Component {
 
@@ -32,4 +43,4 @@ class Main extends Component {
   }
 }
 
-export default Main;
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
