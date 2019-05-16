@@ -53,13 +53,13 @@ class App extends Component {
 
     if (this.state.isLogged) {
       page = <Switch>
-    <Route component={Main} path="/main"></Route>
+    <Route path="/main" component={Main}></Route>
     </Switch>;
     } else {
       page = <Switch>
-        <Route exact component={Home} path="/"></Route>
-        <Route component={Signin} path="/signin"></Route>
-        <Route component={Signup} path="/signup"></Route>
+        <Route exact path="/" component={Home}></Route>
+        <Route path="/signin" component={Signin}></Route>
+        <Route path="/signup" component={Signup}></Route>
       </Switch>;
     }
     return (

@@ -1,0 +1,36 @@
+.vendor-registration {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-vendor-registration {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid rgb(47, 79, 79);
+}
+
+.vendor-registration-heading {
+  width: 100%;
+  margin-top: 0px;
+  padding: 5px 0;
+  background-color: rgb(47, 79, 79);
+  font-weight: 400;
+  color: #ffffff;
+}
+
+.form-control-vendor {
+  width: 170px;
+  height: 25px;
+  margin: 8px 10px;
+}
+
+.form-vendor-registration p {
+  margin: 10px;
+}
+
+.vendor-registration h2 {
+  margin: 20px;
+}

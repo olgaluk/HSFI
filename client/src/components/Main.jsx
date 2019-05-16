@@ -5,6 +5,7 @@ import { Route, Switch } from "react-router-dom";
 import Show from './Show';
 import HeaderMain from './main/HeaderMain';
 import Home from './Home';
+import VendorRegistration from './main/tasks/vendorRegistration/VendorRegistration';
 
 import './Main.css';
 
@@ -25,11 +26,10 @@ class Main extends Component {
       <div className="container">
         <div className="clearfix">
           <HeaderMain />
-          <h3 className="text-muted">Page</h3>
           <Switch>
             <Route exact path="/main/account" component={Show}></Route>
 
-            <Route exact path="/main/vendor-registration" component={Show}></Route>
+            <Route exact path="/main/vendor-registration" component={VendorRegistration}></Route>
             <Route exact path="/main/scratch-card" component={Show}></Route>
             <Route exact path="/main/hotline" component={Show}></Route>
             <Route exact path="/main/inspection" component={Show}></Route>

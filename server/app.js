@@ -12,7 +12,8 @@ const path = require('path');
 const crypto = require('crypto');
 const user = require('./user.js');
 const User = require('./db/models/User.js');
-// const post = require('./post.js');
+const vendor = require('./vendor.js');
+const Vendor = require('./db/models/Vendor.js');
 
 const app = express();
 
@@ -125,6 +126,20 @@ app.get('/main',
       res.send('ok');
     });
   });
+
+app.post('/vendor-registration', (req, res, next) => {
+  vendor.createVendor(req.body)
+    .then((result) => {
+      console.log(result);
+      console.log('Vendor created');
+      res.send('success');
+    })
+    .catch((err) => {
+      if (err) {
+        res.status(500);
+      }
+    });
+});
 
 
 /*
