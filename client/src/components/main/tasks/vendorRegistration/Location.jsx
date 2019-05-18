@@ -47,8 +47,8 @@ class Location extends React.Component {
           {fields}
         </div>
         <div>
-          <button onClick={this.addBusinessLocation.bind(this)} type="button"><i class="fas fa-plus"></i></button>
-          <button onClick={this.deleteBusinessLocation.bind(this)} type="button"><i class="fas fa-minus"></i></button>
+          <button onClick={this.addBusinessLocation.bind(this)} type="button"><i className="fas fa-plus"></i></button>
+          <button onClick={this.deleteBusinessLocation.bind(this)} type="button"><i className="fas fa-minus"></i></button>
         </div>
       </div>
     )

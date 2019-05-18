@@ -97,3 +97,9 @@ export const addVendorFoodGroup = (foodGroup) => dispatch => {
     foodGroup
   })
 }
+
+export const resetStoreVendor = () => dispatch => {
+  dispatch({
+    type: types.RESET_STOREVENDOR
+  })
+}

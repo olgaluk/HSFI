@@ -105,6 +105,23 @@ export default (state = initialState, action) => {
         foodGroup: action.foodGroup
       }
 
+    case 'RESET_STOREVENDOR':
+      return {
+        operatorName: '',
+        date: '',
+        country: '',
+        vendorName: '',
+        picture: '',
+        licenseNumber: '',
+        licensePicture: '',
+        phone: '',
+        email: '',
+        location: [],
+        schedule: '',
+        ingredient: '',
+        foodGroup: ''
+      }
+
     default:
       return state
   }

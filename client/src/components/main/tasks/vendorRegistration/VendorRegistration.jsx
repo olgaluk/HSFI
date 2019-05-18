@@ -8,12 +8,14 @@ import './VendorRegistration.css';
 
 import { connect } from 'react-redux';
 
+import { resetStoreVendor } from '../../../../actions/vendorsActions';
+
 const mapStateToProps = state => ({
   ...state
 });
 
 const mapDispatchToProps = dispatch => ({
-
+  resetStoreVendor: () => dispatch(resetStoreVendor())
 });
 
 class VendorRegistration extends React.Component {
@@ -35,7 +37,8 @@ class VendorRegistration extends React.Component {
       schedule: '',
       ingredient: '',
       foodGroup: '',
-      message: ''
+      message: '',
+      isRegistered: false
     };
   }
 
@@ -95,7 +98,9 @@ class VendorRegistration extends React.Component {
             ingredient: '',
             foodGroup: '',
             message: 'Vendor successfully registered!',
+            isRegistered: true
           });
+          self.props.resetStoreVendor();
         }
       })
       .catch(function (error) {
@@ -106,9 +111,23 @@ class VendorRegistration extends React.Component {
       });
   }
 
+  showForm() {
+    this.setState({
+      message: '',
+      isRegistered: false
+    });
+  }
+
   render() {
-    return (
-      <div className="vendor-registration">
+    let page;
+
+    if (this.state.isRegistered) {
+      page = <div>
+        <h2>{this.state.message}</h2>
+        <button onClick={this.showForm.bind(this)} type="button">{'back to register'.toLocaleUpperCase()}</button>
+      </div>;
+    } else {
+      page = <div className="vendor-registration">
         <h2>Please fill out the form</h2>
         <h3>{this.state.message}</h3>
         <form className="form-vendor-registration">
@@ -121,9 +140,15 @@ class VendorRegistration extends React.Component {
           <input type="tel" onChange={this.handlePhoneChange.bind(this)} className="form-control-vendor" placeholder="Phone" />
           <input type="email" onChange={this.handleEmailChange.bind(this)} className="form-control-vendor" placeholder="Email" required />
           <Location />
-          
+
         </form>
         <button onClick={this.register} type="button">Register</button>
+      </div>
+    }
+
+    return (
+      <div>
+        {page}
       </div>
     )
   }
