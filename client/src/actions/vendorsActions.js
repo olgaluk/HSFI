@@ -70,6 +70,13 @@ export const addVendorLocation = (location) => dispatch => {
   })
 }
 
+export const deleteVendorLocation = (index) => dispatch => {
+  dispatch({
+    type: types.DELETE_VENDORLOCATION,
+    index
+  })
+}
+
 export const addVendorSchedule = (schedule) => dispatch => {
   dispatch({
     type: types.ADD_VENDORSCHEDULE,

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import BusinessLocation from './BusinessLocation';
+import { deleteVendorLocation } from '../../../../actions/vendorsActions';
 
 import { connect } from 'react-redux';
 
@@ -11,7 +12,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-
+  deleteVendorLocation: (index) => dispatch(deleteVendorLocation(index))
 });
 
 class Location extends React.Component {
@@ -27,6 +28,13 @@ class Location extends React.Component {
     this.setState({ fieldsCount: this.state.fieldsCount + 1 });
   }
 
+  deleteBusinessLocation() {
+    if (this.state.fieldsCount > 1) {
+      this.props.deleteVendorLocation(this.state.fieldsCount - 1);
+      this.setState({ fieldsCount: this.state.fieldsCount - 1 });
+    }
+  }
+
   render() {
     let fields = [];
 
@@ -38,7 +46,10 @@ class Location extends React.Component {
         <div>
           {fields}
         </div>
-        <button onClick={this.addBusinessLocation.bind(this)} type="button">Add</button>
+        <div>
+          <button onClick={this.addBusinessLocation.bind(this)} type="button"><i class="fas fa-plus"></i></button>
+          <button onClick={this.deleteBusinessLocation.bind(this)} type="button"><i class="fas fa-minus"></i></button>
+        </div>
       </div>
     )
   }

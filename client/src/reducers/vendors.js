@@ -78,6 +78,15 @@ export default (state = initialState, action) => {
         location: locations,
       }
 
+    case 'DELETE_VENDORLOCATION':
+      const businessLocations = state.location.filter((item, indexState) =>
+        indexState !== action.index
+      );
+      return {
+        ...state,
+        location: businessLocations,
+      }
+
     case 'ADD_VENDORSCHEDULE':
       return {
         ...state,
