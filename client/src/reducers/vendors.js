@@ -8,7 +8,7 @@ const initialState = {
   licensePicture: '',
   phone: '',
   email: '',
-  location: '',
+  location: [],
   schedule: '',
   ingredient: '',
   foodGroup: ''
@@ -71,9 +71,11 @@ export default (state = initialState, action) => {
       }
 
     case 'ADD_VENDORLOCATION':
+      const locations = [...state.location];
+      locations[action.location.index] = action.location.address;
       return {
         ...state,
-        location: action.location
+        location: locations,
       }
 
     case 'ADD_VENDORSCHEDULE':

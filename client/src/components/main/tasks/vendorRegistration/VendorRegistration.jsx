@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 
 import RegistrationCountry from './RegistrationCountry';
+import Location from './Location';
 
 import './VendorRegistration.css';
 
@@ -30,7 +31,7 @@ class VendorRegistration extends React.Component {
       licensePicture: '',
       phone: '',
       email: '',
-      location: '',
+      location: [],
       schedule: '',
       ingredient: '',
       foodGroup: '',
@@ -89,7 +90,7 @@ class VendorRegistration extends React.Component {
             licensePicture: '',
             phone: '',
             email: '',
-            location: '',
+            location: [],
             schedule: '',
             ingredient: '',
             foodGroup: '',
@@ -119,7 +120,8 @@ class VendorRegistration extends React.Component {
           <input type="text" onChange={this.handleLicenseNumberChange.bind(this)} className="form-control-vendor" placeholder="License number" required />
           <input type="tel" onChange={this.handlePhoneChange.bind(this)} className="form-control-vendor" placeholder="Phone" />
           <input type="email" onChange={this.handleEmailChange.bind(this)} className="form-control-vendor" placeholder="Email" required />
-
+          <Location />
+          
         </form>
         <button onClick={this.register} type="button">Register</button>
       </div>
