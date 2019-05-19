@@ -9,7 +9,7 @@ const initialState = {
   phone: '',
   email: '',
   location: [],
-  schedule: '',
+  schedule: [],
   ingredient: '',
   foodGroup: ''
 }
@@ -88,9 +88,20 @@ export default (state = initialState, action) => {
       }
 
     case 'ADD_VENDORSCHEDULE':
+      const scheduleVendor = [...state.schedule];
+      scheduleVendor[action.schedule.index] = action.schedule.data;
       return {
         ...state,
-        schedule: action.schedule
+        schedule: scheduleVendor
+      }
+
+    case 'DELETE_VENDORSCHEDULE':
+      const businessSchedule = state.schedule.filter((item, indexState) =>
+        indexState !== action.index
+      );
+      return {
+        ...state,
+        schedule: businessSchedule,
       }
 
     case 'ADD_VENDORINGREDIENT':
@@ -117,7 +128,7 @@ export default (state = initialState, action) => {
         phone: '',
         email: '',
         location: [],
-        schedule: '',
+        schedule: [],
         ingredient: '',
         foodGroup: ''
       }

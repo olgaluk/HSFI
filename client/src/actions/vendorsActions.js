@@ -84,6 +84,13 @@ export const addVendorSchedule = (schedule) => dispatch => {
   })
 }
 
+export const deleteVendorSchedule = (index) => dispatch => {
+  dispatch({
+    type: types.DELETE_VENDORSCHEDULE,
+    index
+  })
+}
+
 export const addVendorIngredient = (ingredient) => dispatch => {
   dispatch({
     type: types.ADD_VENDORINGREDIENT,

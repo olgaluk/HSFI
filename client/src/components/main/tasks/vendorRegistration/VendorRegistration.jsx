@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import RegistrationCountry from './RegistrationCountry';
 import Location from './Location';
+import Schedule from './Schedule';
 
 import './VendorRegistration.css';
 
@@ -34,7 +35,7 @@ class VendorRegistration extends React.Component {
       phone: '',
       email: '',
       location: [],
-      schedule: '',
+      schedule: [],
       ingredient: '',
       foodGroup: '',
       message: '',
@@ -78,7 +79,7 @@ class VendorRegistration extends React.Component {
       phone: this.state.phone,
       email: this.state.email,
       location: this.props.vendors.location,
-      schedule: this.state.schedule,
+      schedule: this.props.vendors.schedule,
       ingredient: this.state.ingredient,
       foodGroup: this.state.foodGroup,
     })
@@ -94,7 +95,7 @@ class VendorRegistration extends React.Component {
             phone: '',
             email: '',
             location: [],
-            schedule: '',
+            schedule: [],
             ingredient: '',
             foodGroup: '',
             message: 'Vendor successfully registered!',
@@ -140,7 +141,7 @@ class VendorRegistration extends React.Component {
           <input type="tel" onChange={this.handlePhoneChange.bind(this)} className="form-control-vendor" placeholder="Phone" />
           <input type="email" onChange={this.handleEmailChange.bind(this)} className="form-control-vendor" placeholder="Email" required />
           <Location />
-
+          <Schedule />
         </form>
         <button onClick={this.register} type="button">Register</button>
       </div>
