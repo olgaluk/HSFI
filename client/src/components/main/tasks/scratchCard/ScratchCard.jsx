@@ -1,9 +1,12 @@
 import React from 'react';
+import Select from 'react-select';
 import axios from 'axios';
 
 import './ScratchCard.css';
 
 import { connect } from 'react-redux';
+
+import currencies from './currencies.json';
 
 const mapStateToProps = state => ({
   ...state
@@ -12,6 +15,17 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 
 });
+
+const options = currencies.map((elem) => {
+  return {
+    value: String(elem.name),
+    label: elem.symbol
+  };
+});
+
+let currencySelected = {
+  selectedOption: null,
+};
 
 class ScratchCard extends React.Component {
   constructor(props) {
@@ -26,7 +40,10 @@ class ScratchCard extends React.Component {
       foodGroup: '',
       quantity: null,
       serialNumber: '',
-
+      costCard: {
+        value: null,
+        currency: ''
+      },
       message: '',
       isRegistered: false
     };
@@ -43,6 +60,7 @@ class ScratchCard extends React.Component {
   handleLicenseNumberChange(e) {
     const number = e.target.value;
     if (number.length === 6) {
+      this.setState({ licenseNumber: number });
       this.addVendorName('');
       this.addFoodGroup('');
       const self = this;
@@ -70,6 +88,18 @@ class ScratchCard extends React.Component {
     this.setState({ serialNumber: e.target.value });
   }
 
+  handleCostCardChange(e) {
+    const newDataCostCard = this.state.costCard;
+    this.setState({ costCard: { ...newDataCostCard, value: e.target.value } });
+  }
+
+  handleCurrencyChange = (e) => {
+    currencySelected = { e };
+    console.log(currencySelected);
+    const newData = this.state.costCard;
+    this.setState({ costCard: { ...newData, currency: e.label } });
+  }
+
   componentWillMount() {
     const date = new Date();
     this.setState({
@@ -80,12 +110,29 @@ class ScratchCard extends React.Component {
   register() {
     const self = this;
     axios.post('/scratch-card', {
-
+      operatorName: this.state.operatorName,
+      date: this.state.date,
+      licenseNumber: this.state.licenseNumber,
+      quantity: this.state.quantity,
+      serialNumber: this.state.serialNumber,
+      costCard: this.state.costCard
     })
       .then(function (response) {
         console.log(response);
         if (response.data === 'success') {
-
+          self.setState({
+            licenseNumber: '',
+            vendorName: '',
+            foodGroup: '',
+            quantity: null,
+            serialNumber: '',
+            costCard: {
+              value: null,
+              currency: ''
+            },
+            message: 'Cards successfully registered!',
+            isRegistered: true
+          });
         }
       })
       .catch(function (error) {
@@ -105,6 +152,7 @@ class ScratchCard extends React.Component {
 
   render() {
     let page;
+    const { selectedOption } = currencySelected;
 
     if (this.state.isRegistered) {
       page = <div>
@@ -125,7 +173,10 @@ class ScratchCard extends React.Component {
 
           <input type="number" onChange={this.handleQuantityChange.bind(this)} className="form-control-scratch" placeholder="Quantity of cards" required />
           <input type="text" onChange={this.handleSerialNumberChange.bind(this)} className="form-control-scratch" placeholder="First card's serial no." required />
-
+          <div className="cost-card">
+            <input type="number" onChange={this.handleCostCardChange.bind(this)} className="form-control-scratch" placeholder="Cost per card" required />
+            <Select value={selectedOption} onChange={this.handleCurrencyChange.bind(this)} options={options} placeholder="Currency" />
+          </div>
         </form>
         <button onClick={this.register} type="button">Register</button>
       </div>

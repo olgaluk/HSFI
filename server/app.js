@@ -14,6 +14,7 @@ const user = require('./user.js');
 const User = require('./db/models/User.js');
 const vendor = require('./vendor.js');
 const Vendor = require('./db/models/Vendor.js');
+const card = require('./card.js');
 
 const app = express();
 
@@ -80,17 +81,12 @@ app.use(passport.session());
 
 app.use(bodyParser.json());
 
-/* app.post('/signin', passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/main',
-})); */
-
 app.post('/signin', passport.authenticate('local'),
   (req, res) => {
     res.send(req.user);
   });
 
-app.post('/signup', (req, res, next) => {
+app.post('/signup', (req, res) => {
   user.createUser(req.body)
     .then((result) => {
       console.log(result);
@@ -111,7 +107,7 @@ app.get('/main',
     });
   });
 
-app.post('/vendor-registration', passport.authenticationMiddleware(), (req, res, next) => {
+app.post('/vendor-registration', passport.authenticationMiddleware(), (req, res) => {
   vendor.createVendor(req.body)
     .then((result) => {
       console.log(result);
@@ -125,18 +121,39 @@ app.post('/vendor-registration', passport.authenticationMiddleware(), (req, res,
     });
 });
 
-app.post('/scratch-card', passport.authenticationMiddleware(), (req, res) => {
-  const { licenseNumber } = req.body;
-  vendor.getVendor(licenseNumber)
-    .then((result) => {
-      res.send(result);
-    })
-    .catch((err) => {
-      if (err) {
-        res.status(500);
-      }
-    });
-});
+function makeScratchCardMiddleware(req, res, next) {
+  console.log(req.body);
+  const { operatorName, date } = req.body;
+  if (operatorName && date) {
+    card.createCard(req.body)
+      .then((result) => {
+        console.log(result);
+        console.log('Cards created');
+        res.send('success');
+      })
+      .catch((err) => {
+        if (err) {
+          res.status(500);
+        }
+      });
+  } else return next();
+}
+
+app.post('/scratch-card',
+  passport.authenticationMiddleware(),
+  makeScratchCardMiddleware,
+  (req, res) => {
+    const { licenseNumber } = req.body;
+    vendor.getVendor(licenseNumber)
+      .then((result) => {
+        res.send(result);
+      })
+      .catch((err) => {
+        if (err) {
+          res.status(500);
+        }
+      });
+  });
 
 app.listen(7777, () => {
   console.log('Started listening on port', 7777);

@@ -34,3 +34,32 @@
 .scratch-card h2 {
   margin: 20px;
 }
+
+.cost-card {
+  display: flex;
+  width: 100%;
+  margin-right: 9px;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.cost-card .form-control-scratch {
+  width: 100px;
+  height: 33.95px;
+  margin-top: 5px;
+}
+
+.cost-card .css-1pcexqc-container {
+  width: 96%;
+}
+
+.cost-card .css-bg1rzq-control {
+  border-radius: 0;
+  border: 1px solid rgb(153, 151, 151);
+  font-size: 14px;
+  color: rgb(75, 74, 74);
+}
+
+.cost-card .css-bg1rzq-control div {
+  font-size: 14px;
+}
