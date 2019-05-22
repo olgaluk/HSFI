@@ -2,6 +2,19 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  width: 100%;
+}
+
+div.schedule>div:first-child {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+div.schedule>div:last-child {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .business-schedule {
@@ -19,13 +32,13 @@
 }
 
 .form-control-schedule {
-  height: 25px;
+  height: 30px;
   margin: 8px 10px;
 }
 
 .schedule .css-bg1rzq-control {
   border-radius: 0;
-  border-color: rgb(179, 178, 178);
+  border: 1px solid rgb(153, 151, 151);
   font-size: 15px;
 }
 

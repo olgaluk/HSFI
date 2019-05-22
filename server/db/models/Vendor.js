@@ -23,6 +23,7 @@ const Vendor = new mongoose.Schema({
   },
   licenseNumber: {
     type: String,
+    unique: true,
     required: true,
   },
   licensePicture: {

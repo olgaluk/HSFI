@@ -80,22 +80,6 @@ app.use(passport.session());
 
 app.use(bodyParser.json());
 
-/* app.get('/', (req, res) => {
-  res.sendFile(`${__dirname}/html/index.html`);
-});
-
- app.get('/home', (req, res) => {
-  if (sessions && sessions.username) {
-    res.sendFile(`${__dirname}/html/home.html`);
-  } else {
-    res.send('unauthorized');
-  }
-}); */
-
-
-/* app.get('/main', passport.authenticationMiddleware(), renderMail);
- */
-
 /* app.post('/signin', passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/main',
@@ -114,7 +98,7 @@ app.post('/signup', (req, res, next) => {
       res.send('success');
     })
     .catch((err) => {
-      if (err.toJSON().code === 11000) {
+      if (err) {
         res.status(500).send('This email already exist');
       }
     });
@@ -127,7 +111,7 @@ app.get('/main',
     });
   });
 
-app.post('/vendor-registration', (req, res, next) => {
+app.post('/vendor-registration', passport.authenticationMiddleware(), (req, res, next) => {
   vendor.createVendor(req.body)
     .then((result) => {
       console.log(result);
@@ -141,21 +125,18 @@ app.post('/vendor-registration', (req, res, next) => {
     });
 });
 
-
-/*
-app.post('/addpost', (req, res) => {
-  const { title, subject } = req.body;
-  post.addPost(title, subject, (result) => {
-    res.send(result);
-  });
+app.post('/scratch-card', passport.authenticationMiddleware(), (req, res) => {
+  const { licenseNumber } = req.body;
+  vendor.getVendor(licenseNumber)
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      if (err) {
+        res.status(500);
+      }
+    });
 });
-
-app.post('/getpost', (req, res) => {
-  post.getPost((result) => {
-    res.send(result);
-  });
-}); */
-
 
 app.listen(7777, () => {
   console.log('Started listening on port', 7777);

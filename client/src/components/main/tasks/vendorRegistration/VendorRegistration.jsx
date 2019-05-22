@@ -4,6 +4,8 @@ import axios from 'axios';
 import RegistrationCountry from './RegistrationCountry';
 import Location from './Location';
 import Schedule from './Schedule';
+import Ingredient from './Ingredient';
+import FoodGroupVendor from './FoodGroupVendor';
 
 import './VendorRegistration.css';
 
@@ -36,7 +38,7 @@ class VendorRegistration extends React.Component {
       email: '',
       location: [],
       schedule: [],
-      ingredient: '',
+      ingredient: [],
       foodGroup: '',
       message: '',
       isRegistered: false
@@ -80,8 +82,8 @@ class VendorRegistration extends React.Component {
       email: this.state.email,
       location: this.props.vendors.location,
       schedule: this.props.vendors.schedule,
-      ingredient: this.state.ingredient,
-      foodGroup: this.state.foodGroup,
+      ingredient: this.props.vendors.ingredient,
+      foodGroup: this.props.vendors.foodGroup,
     })
       .then(function (response) {
         console.log(response);
@@ -96,7 +98,7 @@ class VendorRegistration extends React.Component {
             email: '',
             location: [],
             schedule: [],
-            ingredient: '',
+            ingredient: [],
             foodGroup: '',
             message: 'Vendor successfully registered!',
             isRegistered: true
@@ -137,11 +139,13 @@ class VendorRegistration extends React.Component {
           <p><b>Registration date:</b> {this.state.date.toDateString()}</p>
           <RegistrationCountry />
           <input type="text" onChange={this.handleVendorNameChange.bind(this)} className="form-control-vendor" placeholder="Vendor name" required />
-          <input type="text" onChange={this.handleLicenseNumberChange.bind(this)} className="form-control-vendor" placeholder="License number" required />
+          <input type="text" onChange={this.handleLicenseNumberChange.bind(this)} className="form-control-vendor" placeholder="License number (6 symbols)" required />
           <input type="tel" onChange={this.handlePhoneChange.bind(this)} className="form-control-vendor" placeholder="Phone" />
           <input type="email" onChange={this.handleEmailChange.bind(this)} className="form-control-vendor" placeholder="Email" required />
           <Location />
           <Schedule />
+          <Ingredient />
+          <FoodGroupVendor />
         </form>
         <button onClick={this.register} type="button">Register</button>
       </div>

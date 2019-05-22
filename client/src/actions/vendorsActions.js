@@ -98,6 +98,13 @@ export const addVendorIngredient = (ingredient) => dispatch => {
   })
 }
 
+export const deleteVendorIngredient = (index) => dispatch => {
+  dispatch({
+    type: types.DELETE_VENDORINGREDIENT,
+    index
+  })
+}
+
 export const addVendorFoodGroup = (foodGroup) => dispatch => {
   dispatch({
     type: types.ADD_VENDORFOODGROUP,

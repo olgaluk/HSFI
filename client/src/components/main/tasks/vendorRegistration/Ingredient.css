@@ -1,20 +1,23 @@
-.location {
+.ingredient {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  width: 100%;
 }
 
-div.location>div:first-child {
+div.ingredient>div:first-child {
+  width: 70%;
   display: flex;
   flex-direction: column;
 }
 
-div.location>div:last-child {
+div.ingredient>div:last-child {
   display: flex;
   justify-content: flex-end;
+  width: 28%;
 }
 
-.location button {
+.ingredient button {
   width: 40px;
   height: 30px;
   padding: 0;
@@ -23,8 +26,8 @@ div.location>div:last-child {
   text-align: center;
 }
 
-.form-control-location {
-  width: 100px;
+.form-control-ingredient {
+  width: 100%;
   height: 25px;
   margin: 8px 10px;
 }

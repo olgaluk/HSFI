@@ -10,7 +10,7 @@ const initialState = {
   email: '',
   location: [],
   schedule: [],
-  ingredient: '',
+  ingredient: [],
   foodGroup: ''
 }
 
@@ -105,9 +105,20 @@ export default (state = initialState, action) => {
       }
 
     case 'ADD_VENDORINGREDIENT':
+      const ingredientVendor = [...state.ingredient];
+      ingredientVendor[action.ingredient.index] = action.ingredient.data;
       return {
         ...state,
-        ingredient: action.ingredient
+        ingredient: ingredientVendor
+      }
+
+    case 'DELETE_VENDORINGREDIENT':
+      const ingredientSourceVendor = state.ingredient.filter((item, indexState) =>
+        indexState !== action.index
+      );
+      return {
+        ...state,
+        ingredient: ingredientSourceVendor,
       }
 
     case 'ADD_VENDORFOODGROUP':
@@ -129,7 +140,7 @@ export default (state = initialState, action) => {
         email: '',
         location: [],
         schedule: [],
-        ingredient: '',
+        ingredient: [],
         foodGroup: ''
       }
 

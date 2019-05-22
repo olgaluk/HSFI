@@ -1,0 +1,19 @@
+.food {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.food .css-1pcexqc-container {
+  width: 96%;
+}
+
+.food .css-bg1rzq-control {
+  border-radius: 0;
+  border: 1px solid rgb(153, 151, 151);
+  font-size: 14px;
+}
+
+.food .css-bg1rzq-control div {
+  font-size: 14px;
+}

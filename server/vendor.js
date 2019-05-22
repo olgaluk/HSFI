@@ -22,4 +22,4 @@ exports.createVendor = (vendorData) => {
   return new Vendor(vendor).save();
 };
 
-exports.getVendor = id => Vendor.findOne(id);
+exports.getVendor = licenseNumber => Vendor.findOne({ licenseNumber });
