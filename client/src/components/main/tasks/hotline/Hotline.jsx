@@ -83,15 +83,15 @@ class Hotline extends React.Component {
         <button onClick={this.showForm.bind(this)} type="button">{'back to register'.toLocaleUpperCase()}</button>
       </div>;
     } else {
-      page = <div className="scratch-card">
+      page = <div className="hotline">
         <h2>Please fill out the form</h2>
         <h3>{this.state.message}</h3>
-        <form className="form-scratch-card">
-          <h3 className="scratch-card-heading">Call form</h3>
+        <form className="form-hotline">
+          <h3 className="hotline-heading">Call form</h3>
           <p><b>Operator's name:</b> {this.state.operatorName}</p>
           <p><b>Call date:</b> {this.state.date.toDateString()}</p>
-          <input type="text" onChange={this.handleIdCallerChange.bind(this)} className="form-control-scratch" placeholder="National ID n. of caller" required />
-          <input type="text" onChange={this.handleSerialNumberChange.bind(this)} className="form-control-scratch" placeholder="Scratch card serial no." required />
+          <input type="text" onChange={this.handleIdCallerChange.bind(this)} className="form-control-hotline" placeholder="National ID n. of caller" required />
+          <input type="text" onChange={this.handleSerialNumberChange.bind(this)} className="form-control-hotline" placeholder="Scratch card serial no." required />
         </form>
         <button onClick={this.register} type="button">Register</button>
       </div>
