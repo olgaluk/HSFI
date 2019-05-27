@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const crypto = require('crypto');
 
-const db = mongoose.connect('mongodb://localhost:27017/Healthy');
+const db = mongoose.connect('mongodb://localhost:27017/Healthy', { useNewUrlParser: true });
+mongoose.set('useCreateIndex', true);
 const User = require('./db/models/User.js');
 
 function hash(text) {
@@ -23,6 +24,4 @@ exports.createUser = (userData) => {
   return new User(user).save();
 };
 
-exports.getUser = (id) => {
-  return User.findOne(id);
-};
+exports.getUser = id => User.findOne(id);

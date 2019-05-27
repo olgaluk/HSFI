@@ -87,7 +87,7 @@ class VendorRegistration extends React.Component {
     })
       .then(function (response) {
         console.log(response);
-        if (response.data === 'success') {
+        if (response.status === 201) {
           self.setState({
             country: '',
             vendorName: '',
@@ -106,11 +106,16 @@ class VendorRegistration extends React.Component {
           self.props.resetStoreVendor();
         }
       })
-      .catch(function (error) {
-        self.setState({
-          message: 'Check the correctness of the entered data!',
-        });
-        console.log(error);
+      .catch(function (err) {
+        if (err.response.status === 406) {
+          self.setState({
+            message: 'Vendor with this license number has already been created!',
+          });
+        } else {
+          self.setState({
+            message: 'Check the correctness of the entered data!',
+          });
+        }
       });
   }
 

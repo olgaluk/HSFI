@@ -69,7 +69,7 @@ class ScratchCard extends React.Component {
       })
         .then(function (response) {
           console.log(response.data);
-          if (response.data) {
+          if (response.status === 200) {
             self.addVendorName(response.data.vendorName);
             self.addFoodGroup(response.data.foodGroup);
           }
@@ -119,7 +119,7 @@ class ScratchCard extends React.Component {
     })
       .then(function (response) {
         console.log(response);
-        if (response.data === 'success') {
+        if (response.status === 201) {
           self.setState({
             licenseNumber: '',
             vendorName: '',
@@ -135,11 +135,10 @@ class ScratchCard extends React.Component {
           });
         }
       })
-      .catch(function (error) {
+      .catch(function () {
         self.setState({
           message: 'Check the correctness of the entered data!',
         });
-        console.log(error);
       });
   }
 
@@ -167,10 +166,9 @@ class ScratchCard extends React.Component {
           <h3 className="scratch-card-heading">Transaction form</h3>
           <p><b>Operator's name:</b> {this.state.operatorName}</p>
           <p><b>Transaction date:</b> {this.state.date.toDateString()}</p>
-          <input type="text" onChange={this.handleLicenseNumberChange.bind(this)} className="form-control-scratch" placeholder="License number (6 symbols)" required />
+          <input type="text" pattern="[0-9]{6}" onChange={this.handleLicenseNumberChange.bind(this)} className="form-control-scratch" placeholder="License number (6 symbols)" required />
           <p><b>Vendor's name:</b> {this.state.vendorName}</p>
           <p><b>Food group:</b> {this.state.foodGroup}</p>
-
           <input type="number" onChange={this.handleQuantityChange.bind(this)} className="form-control-scratch" placeholder="Quantity of cards" required />
           <input type="text" onChange={this.handleSerialNumberChange.bind(this)} className="form-control-scratch" placeholder="First card's serial no." required />
           <div className="cost-card">

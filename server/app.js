@@ -1,6 +1,6 @@
 const express = require('express');
 
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 
 const session = require('express-session');
 const bodyParser = require('body-parser');
@@ -10,16 +10,14 @@ const MongoStore = require('connect-mongo')(session);
 
 const path = require('path');
 const crypto = require('crypto');
-const user = require('./user.js');
+
 const User = require('./db/models/User.js');
-const vendor = require('./vendor.js');
-const Vendor = require('./db/models/Vendor.js');
-const card = require('./card.js');
+// const Vendor = require('./db/models/Vendor.js');
 
 const app = express();
 
 function authenticationMiddleware() {
-  return function (req, res, next) {
+  return (req, res, next) => {
     if (req.isAuthenticated()) {
       return next();
     }
@@ -81,79 +79,25 @@ app.use(passport.session());
 
 app.use(bodyParser.json());
 
-app.post('/signin', passport.authenticate('local'),
-  (req, res) => {
-    res.send(req.user);
-  });
+const signin = require('./routes/signin');
+const signup = require('./routes/signup');
+const main = require('./routes/main');
+const vendorRegistration = require('./routes/vendor-registration');
+const scratchCardLicense = require('./routes/scratchCardLicense');
+const scratchCard = require('./routes/scratchCard');
 
-app.post('/signup', (req, res) => {
-  user.createUser(req.body)
-    .then((result) => {
-      console.log(result);
-      console.log('User created');
-      res.send('success');
-    })
-    .catch((err) => {
-      if (err) {
-        res.status(500).send('This email already exist');
-      }
-    });
-});
+app.use('/signin', passport.authenticate('local'), signin);
 
-app.get('/main',
-  (req, res) => {
-    req.session.destroy((err) => {
-      res.send('ok');
-    });
-  });
+app.use('/signup', signup);
 
-app.post('/vendor-registration', passport.authenticationMiddleware(), (req, res) => {
-  vendor.createVendor(req.body)
-    .then((result) => {
-      console.log(result);
-      console.log('Vendor created');
-      res.send('success');
-    })
-    .catch((err) => {
-      if (err) {
-        res.status(500);
-      }
-    });
-});
+app.use('/main', main);
 
-function makeScratchCardMiddleware(req, res, next) {
-  console.log(req.body);
-  const { operatorName, date } = req.body;
-  if (operatorName && date) {
-    card.createCard(req.body)
-      .then((result) => {
-        console.log(result);
-        console.log('Cards created');
-        res.send('success');
-      })
-      .catch((err) => {
-        if (err) {
-          res.status(500);
-        }
-      });
-  } else return next();
-}
+app.use('/vendor-registration', passport.authenticationMiddleware(), vendorRegistration);
 
-app.post('/scratch-card',
+app.use('/scratch-card',
   passport.authenticationMiddleware(),
-  makeScratchCardMiddleware,
-  (req, res) => {
-    const { licenseNumber } = req.body;
-    vendor.getVendor(licenseNumber)
-      .then((result) => {
-        res.send(result);
-      })
-      .catch((err) => {
-        if (err) {
-          res.status(500);
-        }
-      });
-  });
+  scratchCard,
+  scratchCardLicense);
 
 app.listen(7777, () => {
   console.log('Started listening on port', 7777);

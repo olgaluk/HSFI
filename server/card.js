@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
-const db = mongoose.connect('mongodb://localhost:27017/Healthy');
+const db = mongoose.connect('mongodb://localhost:27017/Healthy', { useNewUrlParser: true });
+mongoose.set('useCreateIndex', true);
 const Card = require('./db/models/Card');
 
 exports.createCard = (cardData) => {
