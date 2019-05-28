@@ -1,6 +1,13 @@
+/* eslint-disable no-console */
 const express = require('express');
 
-// const mongoose = require('mongoose');
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost:27017/Healthy', { useNewUrlParser: true });
+mongoose.set('useCreateIndex', true);
+mongoose.Promise = global.Promise;
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 const session = require('express-session');
 const bodyParser = require('body-parser');
@@ -12,16 +19,14 @@ const path = require('path');
 const crypto = require('crypto');
 
 const User = require('./db/models/User.js');
-// const Vendor = require('./db/models/Vendor.js');
 
 const app = express();
 
 function authenticationMiddleware() {
   return (req, res, next) => {
     if (req.isAuthenticated()) {
-      return next();
-    }
-    res.redirect('/');
+      next();
+    } else res.redirect('/');
   };
 }
 
@@ -82,22 +87,12 @@ app.use(bodyParser.json());
 const signin = require('./routes/signin');
 const signup = require('./routes/signup');
 const main = require('./routes/main');
-const vendorRegistration = require('./routes/vendor-registration');
-const scratchCardLicense = require('./routes/scratchCardLicense');
-const scratchCard = require('./routes/scratchCard');
 
 app.use('/signin', passport.authenticate('local'), signin);
 
 app.use('/signup', signup);
 
-app.use('/main', main);
-
-app.use('/vendor-registration', passport.authenticationMiddleware(), vendorRegistration);
-
-app.use('/scratch-card',
-  passport.authenticationMiddleware(),
-  scratchCard,
-  scratchCardLicense);
+app.use('/main', passport.authenticationMiddleware(), main);
 
 app.listen(7777, () => {
   console.log('Started listening on port', 7777);

@@ -4,9 +4,10 @@ const Vendor = new mongoose.Schema({
   operatorName: {
     type: String,
     required: true,
+    max: 100,
   },
   date: {
-    type: Object,
+    type: Date,
     required: true,
   },
   country: {
@@ -16,6 +17,7 @@ const Vendor = new mongoose.Schema({
   vendorName: {
     type: String,
     required: true,
+    max: 100,
   },
   picture: {
     type: Object,

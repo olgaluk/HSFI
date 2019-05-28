@@ -70,7 +70,7 @@ class VendorRegistration extends React.Component {
 
   register() {
     const self = this;
-    axios.post('/vendor-registration', {
+    axios.post('/main/vendor-registration', {
       operatorName: this.state.operatorName,
       date: this.state.date,
       country: this.props.vendors.country,

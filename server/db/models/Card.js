@@ -6,7 +6,7 @@ const Card = new mongoose.Schema({
     required: true,
   },
   date: {
-    type: Object,
+    type: Date,
     required: true,
   },
   licenseNumber: {

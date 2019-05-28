@@ -64,7 +64,7 @@ class ScratchCard extends React.Component {
       this.addVendorName('');
       this.addFoodGroup('');
       const self = this;
-      axios.post('/scratch-card', {
+      axios.post('/main/scratch-card', {
         licenseNumber: number
       })
         .then(function (response) {
@@ -109,7 +109,7 @@ class ScratchCard extends React.Component {
 
   register() {
     const self = this;
-    axios.post('/scratch-card', {
+    axios.post('/main/scratch-card', {
       operatorName: this.state.operatorName,
       date: this.state.date,
       licenseNumber: this.state.licenseNumber,
