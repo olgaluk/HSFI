@@ -84,6 +84,12 @@ app.use(passport.session());
 
 app.use(bodyParser.json());
 
+// eslint-disable-next-line no-unused-vars
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
 const signin = require('./routes/signin');
 const signup = require('./routes/signup');
 const main = require('./routes/main');

@@ -33,6 +33,7 @@ class ScratchCard extends React.Component {
     this.register = this.register.bind(this);
 
     this.state = {
+      vendorId: '',
       operatorName: this.props.simpleReducer.name,
       date: '',
       licenseNumber: '',
@@ -64,15 +65,19 @@ class ScratchCard extends React.Component {
       this.addVendorName('');
       this.addFoodGroup('');
       const self = this;
-      axios.post('/main/scratch-card', {
-        licenseNumber: number
-      })
+      axios.get(`/main/scratch-card?licenseNumber=${number}`)
         .then(function (response) {
           console.log(response.data);
           if (response.status === 200) {
             self.addVendorName(response.data.vendorName);
             self.addFoodGroup(response.data.foodGroup);
+            self.setState({ vendorId: response.data._id });
           }
+          axios.get(`/main/scratch-card?vendorId=${response.data._id}&licenseNumber=${number}`)
+            .then(function (response) {
+              console.log(response.data);
+              self.setState({ serialNumber: response.data });
+            })
         })
         .catch(function (error) {
           console.log(error);
@@ -110,10 +115,10 @@ class ScratchCard extends React.Component {
   register() {
     const self = this;
     axios.post('/main/scratch-card', {
+      vendorId: this.state.vendorId,
       operatorName: this.state.operatorName,
       date: this.state.date,
-      licenseNumber: this.state.licenseNumber,
-      quantity: this.state.quantity,
+      quantity: +this.state.quantity,
       serialNumber: this.state.serialNumber,
       costCard: this.state.costCard
     })
@@ -121,6 +126,7 @@ class ScratchCard extends React.Component {
         console.log(response);
         if (response.status === 201) {
           self.setState({
+            vendorId: '',
             licenseNumber: '',
             vendorName: '',
             foodGroup: '',
@@ -170,7 +176,7 @@ class ScratchCard extends React.Component {
           <p><b>Vendor's name:</b> {this.state.vendorName}</p>
           <p><b>Food group:</b> {this.state.foodGroup}</p>
           <input type="number" onChange={this.handleQuantityChange.bind(this)} className="form-control-scratch" placeholder="Quantity of cards" required />
-          <input type="text" onChange={this.handleSerialNumberChange.bind(this)} className="form-control-scratch" placeholder="First card's serial no." required />
+          <p><b>First card's serial no.:</b> {this.state.serialNumber}</p>
           <div className="cost-card">
             <input type="number" onChange={this.handleCostCardChange.bind(this)} className="form-control-scratch" placeholder="Cost per card" required />
             <Select value={selectedOption} onChange={this.handleCurrencyChange.bind(this)} options={options} placeholder="Currency" />

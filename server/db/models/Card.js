@@ -9,12 +9,9 @@ const Card = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  licenseNumber: {
-    type: String,
-    required: true,
-  },
-  quantity: {
-    type: Number,
+  vendorId: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Vendor',
     required: true,
   },
   serialNumber: {

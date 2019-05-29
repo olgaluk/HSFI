@@ -16,6 +16,7 @@ router.get('/',
 router.post('/vendor-registration', vendorController.vendor_create_post);
 
 // POST request for creating Card
-router.post('/scratch-card', cardController.card_create_post, vendorController.vendor_find_get);
+router.post('/scratch-card', cardController.card_create_post);
 
+router.get('/scratch-card', vendorController.vendor_find_get, cardController.card_last_number_get);
 module.exports = router;
