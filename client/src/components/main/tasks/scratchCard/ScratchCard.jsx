@@ -46,7 +46,8 @@ class ScratchCard extends React.Component {
         currency: ''
       },
       message: '',
-      isRegistered: false
+      isRegistered: false,
+      costAllCards: ''
     };
   }
 
@@ -86,19 +87,18 @@ class ScratchCard extends React.Component {
   }
 
   handleQuantityChange(e) {
+    this.setState({ costAllCards: '' });
     this.setState({ quantity: e.target.value });
   }
 
-  handleSerialNumberChange(e) {
-    this.setState({ serialNumber: e.target.value });
-  }
-
   handleCostCardChange(e) {
+    this.setState({ costAllCards: '' });
     const newDataCostCard = this.state.costCard;
     this.setState({ costCard: { ...newDataCostCard, value: e.target.value } });
   }
 
   handleCurrencyChange = (e) => {
+    this.setState({ costAllCards: '' });
     currencySelected = { e };
     console.log(currencySelected);
     const newData = this.state.costCard;
@@ -110,6 +110,17 @@ class ScratchCard extends React.Component {
     this.setState({
       date: date
     });
+  }
+
+  componentDidUpdate() {
+    const { licenseNumber, quantity, serialNumber, costCard, costAllCards } = this.state;
+    if (!costAllCards) {
+      if (licenseNumber && quantity && serialNumber && costCard.value && costCard.currency) {
+        this.setState({
+          costAllCards: `Cost of all cards: ${+quantity * costCard.value} ${costCard.currency}`
+        });
+      }
+    }
   }
 
   register() {
@@ -183,6 +194,7 @@ class ScratchCard extends React.Component {
           </div>
         </form>
         <button onClick={this.register} type="button">Register</button>
+        <div className="cost-card_all"><h3>{this.state.costAllCards}</h3></div>
       </div>
     }
 

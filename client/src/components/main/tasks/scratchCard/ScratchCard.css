@@ -43,6 +43,16 @@
   align-items: flex-start;
 }
 
+.cost-card_all {
+  background-color: #ffffff;
+}
+
+.cost-card_all h3 {
+  line-height: 35px;
+  font-size: 20px;
+  color: rgb(36, 75, 62);
+}
+
 .cost-card .form-control-scratch {
   width: 100px;
   height: 33.95px;
