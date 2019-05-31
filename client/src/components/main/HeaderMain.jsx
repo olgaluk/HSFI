@@ -8,17 +8,7 @@ import Menu from './Menu';
 
 import './HeaderMain.css';
 
-import {
-  addPosition,
-  addName,
-  addEmail,
-  addPassword,
-  addPhone,
-  addOrganization,
-  addTask,
-  addCountry,
-  changeIsLogin
-} from '../../actions/simpleAction';
+import { changeIsLogin, resetStoreUser } from '../../actions/usersActions';
 import { connect } from 'react-redux';
 
 const mapStateToProps = state => ({
@@ -26,15 +16,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addPosition: (position) => dispatch(addPosition(position)),
-  addName: (name) => dispatch(addName(name)),
-  addEmail: (email) => dispatch(addEmail(email)),
-  addPassword: (password) => dispatch(addPassword(password)),
-  addPhone: (phone) => dispatch(addPhone(phone)),
-  addOrganization: (organization) => dispatch(addOrganization(organization)),
-  addTask: (task) => dispatch(addTask(task)),
-  addCountry: (country) => dispatch(addCountry(country)),
-  changeIsLogin: (isLoggedIn) => dispatch(changeIsLogin(isLoggedIn))
+  changeIsLogin: (isLoggedIn) => dispatch(changeIsLogin(isLoggedIn)),
+  resetStoreUser: () => dispatch(resetStoreUser())
 });
 
 class HeaderMain extends Component {
@@ -49,8 +32,8 @@ class HeaderMain extends Component {
 
   componentDidUpdate() {
     if (this.state.response === 'false') {
-      if (this.props.simpleReducer.isLoggedIn) {
-        this.props.changeIsLogin(false);
+      if (this.props.users.isLoggedIn === 'registered') {
+        this.props.changeIsLogin('unregistered');
       }
       this.props.history.push('/');
       console.log('path from history: ', this.props.history);
@@ -61,20 +44,11 @@ class HeaderMain extends Component {
     const self = this;
     axios.get('/main')
       .then(function (response) {
-        if (response.data) {
-          console.log(response.data);
-          self.props.addPosition('');
-          self.props.addName('');
-          self.props.addEmail('');
-          self.props.addPassword('');
-          self.props.addPhone('');
-          self.props.addOrganization('');
-          self.props.addTask('');
-          self.props.addCountry('');
+        if (response.status === 200) {
+          self.props.resetStoreUser();
           self.setState({ response: 'false' });
         }
-      }
-      )
+      })
       .catch(function (error) {
         console.log(error);
       });

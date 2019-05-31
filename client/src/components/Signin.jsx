@@ -16,7 +16,7 @@ import {
   addTask,
   addCountry,
   changeIsLogin
-} from '../actions/simpleAction';
+} from '../actions/usersActions';
 import { connect } from 'react-redux';
 
 const mapStateToProps = state => ({
@@ -49,49 +49,12 @@ class Signin extends React.Component {
     };
   }
 
-  addPosition = (e) => {
-    this.props.addPosition(e);
-  }
-
-  addName = (e) => {
-    this.props.addName(e);
-  };
-
-  addEmail = (e) => {
-    this.props.addEmail(e);
-  };
-
-  addPassword = (e) => {
-    this.props.addPassword(e);
-  };
-
-  addPhone = (e) => {
-    this.props.addPhone(e);
-  };
-
-  addOrganization = (e) => {
-    this.props.addOrganization(e);
-  };
-
-  addTask = (e) => {
-    this.props.addTask(e);
-  }
-
-  addCountry = (e) => {
-    this.props.addCountry(e);
-  }
-
-  changeIsLogin = (isLoggedIn) => {
-    this.props.changeIsLogin(isLoggedIn);
-  }
-
   componentDidUpdate() {
     if (this.state.response === 'true') {
-      if (!this.props.simpleReducer.isLoggedIn) {
-        this.changeIsLogin(true);
+      if (this.props.users.isLoggedIn !== 'registered') {
+        this.props.changeIsLogin('registered');
       }
       this.props.history.push('/main');
-      console.log('path from history: ', this.props.history);
     }
   }
 
@@ -102,16 +65,17 @@ class Signin extends React.Component {
       password: this.state.password,
     })
       .then(function (response) {
-        if (response.data) {
+        if (response.data && response.status === 202) {
           console.log(response.data);
-          self.addPosition(response.data.position);
-          self.addName(response.data.name);
-          self.addEmail(response.data.email);
-          self.addPassword(response.data.password);
-          self.addPhone(response.data.phone);
-          self.addOrganization(response.data.organization);
-          self.addTask(response.data.task);
-          self.addCountry(response.data.country);
+          const { position, name, email, password, phone, organization, task, country } = response.data;
+          self.props.addPosition(position);
+          self.props.addName(name);
+          self.props.addEmail(email);
+          self.props.addPassword(password);
+          self.props.addPhone(phone);
+          self.props.addOrganization(organization);
+          self.props.addTask(task);
+          self.props.addCountry(country);
           self.setState({ response: 'true' });
         }
       }

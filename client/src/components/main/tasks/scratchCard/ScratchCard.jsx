@@ -8,12 +8,14 @@ import { connect } from 'react-redux';
 
 import currencies from './currencies.json';
 
+import { changeIsLogin } from '../../../../actions/usersActions';
+
 const mapStateToProps = state => ({
   ...state
 });
 
 const mapDispatchToProps = dispatch => ({
-
+  changeIsLogin: (isLoggedIn) => dispatch(changeIsLogin(isLoggedIn))
 });
 
 const options = currencies.map((elem) => {
@@ -34,7 +36,7 @@ class ScratchCard extends React.Component {
 
     this.state = {
       vendorId: '',
-      operatorName: this.props.simpleReducer.name,
+      operatorName: '',
       date: '',
       licenseNumber: '',
       vendorName: '',
@@ -47,7 +49,7 @@ class ScratchCard extends React.Component {
       },
       message: '',
       isRegistered: false,
-      costAllCards: ''
+      costAllCards: '',
     };
   }
 
@@ -60,11 +62,12 @@ class ScratchCard extends React.Component {
   }
 
   handleLicenseNumberChange(e) {
+    this.addVendorName('');
+    this.addFoodGroup('');
+    this.setState({ serialNumber: '' });
     const number = e.target.value;
     if (number.length === 6) {
       this.setState({ licenseNumber: number });
-      this.addVendorName('');
-      this.addFoodGroup('');
       const self = this;
       axios.get(`/main/scratch-card?licenseNumber=${number}`)
         .then(function (response) {
@@ -79,8 +82,17 @@ class ScratchCard extends React.Component {
               console.log(response.data);
               self.setState({ serialNumber: response.data });
             })
+            .catch(function (error) {
+              if (error.response.status === 401) {
+                self.props.changeIsLogin('error');
+              }
+              console.log(error);
+            });
         })
         .catch(function (error) {
+          if (error.response.status === 401) {
+            self.props.changeIsLogin('error');
+          }
           console.log(error);
         });
     }
@@ -88,7 +100,7 @@ class ScratchCard extends React.Component {
 
   handleQuantityChange(e) {
     this.setState({ costAllCards: '' });
-    this.setState({ quantity: e.target.value });
+    this.setState({ quantity: +e.target.value });
   }
 
   handleCostCardChange(e) {
@@ -100,7 +112,6 @@ class ScratchCard extends React.Component {
   handleCurrencyChange = (e) => {
     this.setState({ costAllCards: '' });
     currencySelected = { e };
-    console.log(currencySelected);
     const newData = this.state.costCard;
     this.setState({ costCard: { ...newData, currency: e.label } });
   }
@@ -110,6 +121,7 @@ class ScratchCard extends React.Component {
     this.setState({
       date: date
     });
+    setTimeout(() => this.setState({ operatorName: this.props.users.name }), 0);
   }
 
   componentDidUpdate() {
@@ -117,7 +129,7 @@ class ScratchCard extends React.Component {
     if (!costAllCards) {
       if (licenseNumber && quantity && serialNumber && costCard.value && costCard.currency) {
         this.setState({
-          costAllCards: `Cost of all cards: ${+quantity * costCard.value} ${costCard.currency}`
+          costAllCards: `Cost of all cards: ${quantity * costCard.value} ${costCard.currency}`
         });
       }
     }
@@ -125,13 +137,14 @@ class ScratchCard extends React.Component {
 
   register() {
     const self = this;
+    const { vendorId, operatorName, date, quantity, serialNumber, costCard } = this.state;
     axios.post('/main/scratch-card', {
-      vendorId: this.state.vendorId,
-      operatorName: this.state.operatorName,
-      date: this.state.date,
-      quantity: +this.state.quantity,
-      serialNumber: this.state.serialNumber,
-      costCard: this.state.costCard
+      vendorId,
+      operatorName,
+      date,
+      quantity,
+      serialNumber,
+      costCard,
     })
       .then(function (response) {
         console.log(response);
@@ -148,14 +161,18 @@ class ScratchCard extends React.Component {
               currency: ''
             },
             message: 'Cards successfully registered!',
-            isRegistered: true
+            isRegistered: true,
           });
         }
       })
-      .catch(function () {
-        self.setState({
-          message: 'Check the correctness of the entered data!',
-        });
+      .catch(function (error) {
+        if (error.response.status === 401) {
+          self.props.changeIsLogin('error');
+        } else {
+          self.setState({
+            message: 'Check the correctness of the entered data!',
+          });
+        }
       });
   }
 

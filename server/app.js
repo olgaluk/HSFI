@@ -26,7 +26,7 @@ function authenticationMiddleware() {
   return (req, res, next) => {
     if (req.isAuthenticated()) {
       next();
-    } else res.redirect('/');
+    } else res.status(401).send('Unauthorized');
   };
 }
 
@@ -90,9 +90,12 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something broke!');
 });
 
+const home = require('./routes/home');
 const signin = require('./routes/signin');
 const signup = require('./routes/signup');
 const main = require('./routes/main');
+
+app.use('/home', passport.authenticationMiddleware(), home);
 
 app.use('/signin', passport.authenticate('local'), signin);
 

@@ -60,3 +60,9 @@ export const changeIsLogin = (isLoggedIn) => dispatch => {
     isLoggedIn
   })
 }
+
+export const resetStoreUser = () => dispatch => {
+  dispatch({
+    type: 'RESET_STOREUSER',
+  })
+}

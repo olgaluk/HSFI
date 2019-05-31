@@ -19,7 +19,7 @@ class Hotline extends React.Component {
     this.register = this.register.bind(this);
 
     this.state = {
-      operatorName: this.props.simpleReducer.name,
+      operatorName: '',
       date: '',
       idCaller: '',
       serialNumber: '',
@@ -41,6 +41,7 @@ class Hotline extends React.Component {
     this.setState({
       date: date
     });
+    setTimeout(() => this.setState({ operatorName: this.props.users.name }), 0);
   }
 
   register() {

@@ -2,9 +2,9 @@ const express = require('express');
 
 const router = express.Router();
 
-router.post('/',
+router.get('/status',
   (req, res) => {
-    res.status(202).send(req.user);
+    res.status(200).send(req.user);
   });
 
 module.exports = router;

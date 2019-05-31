@@ -8,7 +8,8 @@ const cardController = require('../controllers/cardController');
 router.get('/',
   (req, res) => {
     req.session.destroy((err) => {
-      res.send('ok');
+      if (err) res.status(500).send('Internal Server Error');
+      else res.status(200).send('OK');
     });
   });
 

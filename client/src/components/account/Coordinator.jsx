@@ -12,8 +12,9 @@ import {
   addPassword,
   addPhone,
   addOrganization,
-  addTask
-} from '../../actions/simpleAction';
+  addTask,
+  resetStoreUser
+} from '../../actions/usersActions';
 import { connect } from 'react-redux';
 
 const mapStateToProps = state => ({
@@ -27,13 +28,17 @@ const mapDispatchToProps = dispatch => ({
   addPassword: (password) => dispatch(addPassword(password)),
   addPhone: (phone) => dispatch(addPhone(phone)),
   addOrganization: (organization) => dispatch(addOrganization(organization)),
-  addTask: (task) => dispatch(addTask(task))
+  addTask: (task) => dispatch(addTask(task)),
+  resetStoreUser: () => dispatch(resetStoreUser())
 });
 
 class Coordinator extends React.Component {
   constructor(props) {
     super(props);
     this.signUp = this.signUp.bind(this);
+    this.state = {
+      message: '',
+    };
   }
 
   addName = (e) => {
@@ -59,23 +64,29 @@ class Coordinator extends React.Component {
   };
 
   signUp() {
+    const self = this;
+    const { position, name, email, password, phone, country, organization, task } = this.props.users;
     axios.post('/signup', {
-      position: this.props.simpleReducer.position,
-      name: this.props.simpleReducer.name,
-      email: this.props.simpleReducer.email,
-      password: this.props.simpleReducer.password,
-      phone: this.props.simpleReducer.phone,
-      country: this.props.simpleReducer.country,
-      organization: this.props.simpleReducer.organization,
-      task: this.props.simpleReducer.task,
+      position,
+      name,
+      email,
+      password,
+      phone,
+      country,
+      organization,
+      task,
     })
       .then(function (response) {
         console.log(response);
         if (response.data === 'success') {
-          window.location.assign('http://localhost:3000/signin');
+          self.props.resetStoreUser();
+          self.props.history.push('/signin');
         }
       })
       .catch(function (error) {
+        self.setState({
+          message: 'Check the correctness of the entered data!',
+        });
         console.log(error);
       });
   }
@@ -84,6 +95,7 @@ class Coordinator extends React.Component {
     return (
       <div className="signup-сoordinator">
         <h2>Please fill out the form</h2>
+        <h3>{this.state.message}</h3>
         <form className="form-signup-сoordinator">
           <h3 className="signup-сoordinator-heading">NPC</h3>
           <SelectCountry />

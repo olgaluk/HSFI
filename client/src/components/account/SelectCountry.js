@@ -5,7 +5,7 @@ import country from './country.json';
 
 import './SelectCountry.css';
 
-import { addCountry } from '../../actions/simpleAction';
+import { addCountry } from '../../actions/usersActions';
 import { connect } from 'react-redux';
 
 const mapStateToProps = state => ({

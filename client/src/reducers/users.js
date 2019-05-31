@@ -24,46 +24,59 @@ export default (state = initialState, action) => {
         name: action.name
       }
 
-      case 'ADD_EMAIL':
+    case 'ADD_EMAIL':
       return {
         ...state,
         email: action.email
       }
 
-      case 'ADD_PASSWORD':
+    case 'ADD_PASSWORD':
       return {
         ...state,
         password: action.password
       }
 
-      case 'ADD_PHONE':
+    case 'ADD_PHONE':
       return {
         ...state,
         phone: action.phone
       }
 
-      case 'ADD_COUNTRY':
+    case 'ADD_COUNTRY':
       return {
         ...state,
         country: action.country
       }
 
-      case 'ADD_ORGANIZATION':
+    case 'ADD_ORGANIZATION':
       return {
         ...state,
         organization: action.organization
       }
 
-      case 'ADD_TASK':
+    case 'ADD_TASK':
       return {
         ...state,
         task: action.task
       }
 
-      case 'CHANGE_ISLOGIN':
+    case 'CHANGE_ISLOGIN':
       return {
         ...state,
         isLoggedIn: action.isLoggedIn
+      }
+
+    case 'RESET_STOREUSER':
+      return {
+        ...state,
+        position: '',
+        name: '',
+        email: '',
+        password: '',
+        phone: '',
+        country: '',
+        organization: '',
+        task: ''
       }
 
     default:

@@ -12,13 +12,15 @@ import './VendorRegistration.css';
 import { connect } from 'react-redux';
 
 import { resetStoreVendor } from '../../../../actions/vendorsActions';
+import { changeIsLogin } from '../../../../actions/usersActions';
 
 const mapStateToProps = state => ({
   ...state
 });
 
 const mapDispatchToProps = dispatch => ({
-  resetStoreVendor: () => dispatch(resetStoreVendor())
+  resetStoreVendor: () => dispatch(resetStoreVendor()),
+  changeIsLogin: (isLoggedIn) => dispatch(changeIsLogin(isLoggedIn))
 });
 
 class VendorRegistration extends React.Component {
@@ -27,7 +29,7 @@ class VendorRegistration extends React.Component {
     this.register = this.register.bind(this);
 
     this.state = {
-      operatorName: this.props.simpleReducer.name,
+      operatorName: '',
       date: '',
       country: '',
       vendorName: '',
@@ -63,27 +65,36 @@ class VendorRegistration extends React.Component {
 
   componentWillMount() {
     const date = new Date();
-    this.setState({
-      date: date
-    });
+    this.setState({ date: date });
+    setTimeout(() => this.setState({ operatorName: this.props.users.name }), 0);
   }
 
   register() {
     const self = this;
+    const {
+      operatorName,
+      date,
+      vendorName,
+      picture,
+      licenseNumber,
+      licensePicture,
+      phone,
+      email } = this.state;
+    const { country, location, schedule, ingredient, foodGroup } = this.props.vendors;
     axios.post('/main/vendor-registration', {
-      operatorName: this.state.operatorName,
-      date: this.state.date,
-      country: this.props.vendors.country,
-      vendorName: this.state.vendorName,
-      picture: this.state.picture,
-      licenseNumber: this.state.licenseNumber,
-      licensePicture: this.state.licensePicture,
-      phone: this.state.phone,
-      email: this.state.email,
-      location: this.props.vendors.location,
-      schedule: this.props.vendors.schedule,
-      ingredient: this.props.vendors.ingredient,
-      foodGroup: this.props.vendors.foodGroup,
+      operatorName,
+      date,
+      country,
+      vendorName,
+      picture,
+      licenseNumber,
+      licensePicture,
+      phone,
+      email,
+      location,
+      schedule,
+      ingredient,
+      foodGroup,
     })
       .then(function (response) {
         console.log(response);
@@ -106,8 +117,11 @@ class VendorRegistration extends React.Component {
           self.props.resetStoreVendor();
         }
       })
-      .catch(function (err) {
-        if (err.response.status === 406) {
+      .catch(function (error) {
+        if (error.response.status === 401) {
+          self.props.resetStoreVendor();
+          self.props.changeIsLogin('error');
+        } else if (error.response.status === 406) {
           self.setState({
             message: 'Vendor with this license number has already been created!',
           });
