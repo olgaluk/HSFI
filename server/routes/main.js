@@ -4,6 +4,7 @@ const router = express.Router();
 
 const vendorController = require('../controllers/vendorController');
 const cardController = require('../controllers/cardController');
+const callController = require('../controllers/callController');
 
 router.get('/',
   (req, res) => {
@@ -20,4 +21,10 @@ router.post('/vendor-registration', vendorController.vendor_create_post);
 router.post('/scratch-card', cardController.card_create_post);
 
 router.get('/scratch-card', vendorController.vendor_find_get, cardController.card_last_number_get);
+
+router.post('/hotline',
+  callController.call_create_post,
+  callController.call_find_caller,
+  callController.call_create_flag);
+
 module.exports = router;

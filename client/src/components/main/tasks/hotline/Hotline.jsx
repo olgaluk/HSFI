@@ -46,15 +46,15 @@ class Hotline extends React.Component {
 
   register() {
     const self = this;
-    axios.post('/hotline', {
-      operatorName: this.state.operatorName,
-      date: this.state.date,
-      idCaller: this.state.idCaller,
-      serialNumber: this.state.serialNumber,
+    const { operatorName, idCaller, serialNumber } = this.state;
+    axios.post('/main/hotline', {
+      operatorName,
+      idCaller,
+      serialNumber,
     })
       .then(function (response) {
         console.log(response);
-        if (response.status === 200) {
+        if (response.status === 201) {
           self.setState({
             message: 'Call successfully registered!',
             isRegistered: true

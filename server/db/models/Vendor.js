@@ -54,6 +54,9 @@ const Vendor = new mongoose.Schema({
   foodGroup: {
     type: String,
   },
+  flag: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model('Vendor', Vendor);

@@ -24,8 +24,7 @@ exports.card_create_post = (req, res) => {
       costCard,
     };
     createCard(card)
-      .then((result) => {
-        console.log(result);
+      .then(() => {
         console.log('Cards created');
       })
       .catch((err) => {
@@ -52,7 +51,24 @@ exports.card_last_number_get = (req, res) => {
         console.log(lastSerialNumberCard);
         res.status(201).send(`${lastSerialNumberCard + 1}_${licenseNumber}`);
       }
-      console.log(result);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(501).send('Not Implemented');
+    });
+};
+
+exports.card_find_by_number_post = (req, res, next) => {
+  console.log(req.body);
+  const { serialNumber } = req.body;
+  Card
+    .find({ serialNumber })
+    .then((result) => {
+      if (result.length === 0) {
+        res.status(412).send('Precondition Failed');
+      } else {
+        next();
+      }
     })
     .catch((err) => {
       console.log(err);
