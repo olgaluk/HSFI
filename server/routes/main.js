@@ -5,6 +5,7 @@ const router = express.Router();
 const vendorController = require('../controllers/vendorController');
 const cardController = require('../controllers/cardController');
 const callController = require('../controllers/callController');
+const inspectionController = require('../controllers/inspectionController');
 
 router.get('/',
   (req, res) => {
@@ -26,5 +27,8 @@ router.post('/hotline',
   callController.call_create_post,
   callController.call_find_caller,
   callController.call_create_flag);
+
+// POST request for creating Inspection report
+router.post('/inspection/questions', inspectionController.inspection_create_post);
 
 module.exports = router;

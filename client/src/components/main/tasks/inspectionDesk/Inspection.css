@@ -1,0 +1,149 @@
+.inspection {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-inspection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid rgb(47, 79, 79);
+}
+
+.inspection-heading {
+  width: 100%;
+  margin-top: 0px;
+  padding: 5px 0;
+  background-color: rgb(47, 79, 79);
+  font-weight: 400;
+  color: #ffffff;
+}
+
+.form-control-inspection {
+  width: 95%;
+  height: 25px;
+  margin: 8px 10px;
+}
+
+.form-inspection p {
+  margin: 10px;
+}
+
+.inspection h2 {
+  margin: 20px;
+}
+
+.inspection-question {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  margin: 5px;
+}
+
+.inspection-question p {
+  width: 200px;
+  min-height: 24px;
+  margin: 0 15px 0 0;
+  font-size: 14px;
+  border: 1px solid rgb(47, 79, 79);
+  background-color: #ffffff94;
+  color: #000000;
+}
+
+.inspection-question input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  border-style: solid;
+  border-width: 4px;
+  border-color: rgba(128, 128, 128, 0.815);
+  transition: 0.7s all linear;
+  outline: none;
+  margin-right: 5px;
+}
+
+.inspection-question input[value="1"]::after {
+  content: "+";
+  left: 3.5px;
+  font-size: 20px;
+  position: relative;
+  top: -2px;
+}
+
+.inspection-question input[value="-1"]::after {
+  content: "\2013";
+  left: 4px;
+  font-size: 20px;
+  position: relative;
+  top: -4px;
+}
+
+.inspection-question input:checked {
+  border-color: rgb(47, 79, 79);
+}
+
+.inspection-question legend {
+  color: #ffffff;
+  background-color: rgb(47, 79, 79);
+  padding: 5px 10px;
+  border-radius: 0;
+  border: 0;
+  font-size: 14px;
+}
+
+.inspection-question>div {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin: 5px;
+}
+
+.inspection-question>div>div {
+  width: 63px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.form-inspection button {
+  width: 40px;
+  height: 30px;
+  padding: 0;
+  margin-top: 8px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.inspection-location {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.inspection-location p {
+  width: 160px;
+  min-height: 25px;
+  margin: 8px 5px;
+  border: 2px outset rgba(190, 190, 190, 0.712);
+  background-color: #ffffff93;
+  font-size: 14px;
+  text-align: start;
+  line-height: 25px;
+  padding-left: 1px;
+}
+
+.inspection-oss {
+  width: 95%;
+  height: 25px;
+  margin: 8px 5px;
+  border: 2px outset rgba(190, 190, 190, 0.712);
+  background-color: #ffffff93;
+  font-size: 14px;
+  text-align: start;
+  line-height: 25px;
+  padding-left: 1px;
+}

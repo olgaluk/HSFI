@@ -14,7 +14,8 @@ button {
   width: 150px;
   margin: 10px;
   padding-bottom: 2px;
-  border: 1px solid #3d837f;
+  border: none;
+  box-shadow: inset 0 0 3px 0 #ffffffbe;
   background: #3a8a87;
   background: -webkit-linear-gradient(left, #1b413f, #3a8a87);
   -webkit-border-radius: 40px;

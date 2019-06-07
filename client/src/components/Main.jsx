@@ -8,6 +8,8 @@ import Home from './Home';
 import VendorRegistration from './main/tasks/vendorRegistration/VendorRegistration';
 import ScratchCard from './main/tasks/scratchCard/ScratchCard';
 import Hotline from './main/tasks/hotline/Hotline';
+import Inspection from './main/tasks/inspectionDesk/Inspection';
+import ViewVendors from './main/tasks/inspectionDesk/ViewVendors';
 
 import './Main.css';
 
@@ -34,7 +36,8 @@ class Main extends Component {
             <Route exact path="/main/vendor-registration" component={VendorRegistration}></Route>
             <Route exact path="/main/scratch-card" component={ScratchCard}></Route>
             <Route exact path="/main/hotline" component={Hotline}></Route>
-            <Route exact path="/main/inspection" component={Show}></Route>
+            <Route exact path="/main/inspection" component={Inspection}></Route>
+            <Route exact path="/main/inspection/view-vendors" component={ViewVendors}></Route>
             <Route exact path="/main/report" component={Show}></Route>
 
             <Route exact path="/" component={Home}></Route>
