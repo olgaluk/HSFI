@@ -168,7 +168,7 @@ class Inspection extends React.Component {
       this.setState({ locationValue: 'Unable to retrieve your location' });
     }
 
-    if (!navigator.geolocation) {
+    if (!navigator || !navigator.geolocation) {
       this.setState({ locationValue: 'Geolocation is not supported by your browser' });
     } else {
       this.setState({ locationValue: 'Locating…' });

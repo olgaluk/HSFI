@@ -53,17 +53,32 @@ class BusinessSchedule extends React.Component {
 
   handleFromChange = (e) => {
     const newData = this.state.data;
-    this.setState({ data: { ...newData, from: e.target.value } });
+    const time = e.target.value.split(':');
+    const timeFrom = {
+          hours: time[0],
+          minutes: time[1],
+        };
+    this.setState({
+      data: {
+        ...newData,
+        from: timeFrom,
+      }
+    });
     const currentState = this.state;
-    currentState.data.from = e.target.value;
+    currentState.data.from = timeFrom;
     this.props.addVendorSchedule(currentState);
   }
 
   handleToChange = (e) => {
     const newData = this.state.data;
-    this.setState({ data: { ...newData, to: e.target.value } });
+    const time = e.target.value.split(':');
+    const timeTo = {
+          hours: time[0],
+          minutes: time[1],
+        };
+    this.setState({ data: { ...newData, to: timeTo } });
     const currentState = this.state;
-    currentState.data.to = e.target.value;
+    currentState.data.to = timeTo;
     this.props.addVendorSchedule(currentState);
   }
 

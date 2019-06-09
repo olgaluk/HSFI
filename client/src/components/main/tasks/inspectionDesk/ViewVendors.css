@@ -22,7 +22,97 @@
 }
 
 .form-control-view {
-  width: 95%;
-  height: 25px;
+  width: 93%;
+  height: 33px;
   margin: 8px 10px;
+  padding-left: 2px;
+}
+
+.view .css-1pcexqc-container {
+  width: 200px;
+  font-size: 16px;
+  margin: 5px;
+}
+
+.view .css-bg1rzq-control {
+  border-radius: 0px;
+  border: 1px solid rgb(180, 180, 180);
+  font-size: 14px;
+  color: rgb(53, 51, 51);
+}
+
+.view .css-bg1rzq-control>div {
+  padding-left: 0px;
+}
+
+.view .css-bg1rzq-control div {
+  font-size: 14px;
+}
+
+.view .css-151xaom-placeholder {
+  color: rgb(94, 93, 93);
+}
+
+.red-flag {
+  display: flex;
+  width: 96%;
+  justify-content: space-around;
+  align-items: center;
+  color: rgb(44, 44, 44);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.red-flag input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  border-style: solid;
+  border-width: 4px;
+  border-color: rgba(128, 128, 128, 0.815);
+  transition: 0.5s all linear;
+  outline: none;
+  margin-right: 5px;
+  text-align: center;
+}
+
+.red-flag input[value="Y"]::after {
+  content: "Y";
+  font-size: 16px;
+  position: relative;
+}
+
+.red-flag input[value="N"]::after {
+  content: "N";
+  font-size: 16px;
+  position: relative;
+}
+
+.red-flag input:checked {
+  border-color: rgb(47, 79, 79);
+}
+
+.view table {
+  border: 4px double rgb(160, 158, 158);
+  border-collapse: collapse;
+  margin: 0 auto;
+  background: #ffffffa4;
+}
+
+.view thead td {
+  text-align: center;
+  padding: 5px;
+  border: 1px solid rgb(160, 158, 158);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.view td {
+  padding: 6px;
+  border: 1px solid rgb(160, 158, 158);
+  max-width: 120px;
+  font-size: 14px;
 }

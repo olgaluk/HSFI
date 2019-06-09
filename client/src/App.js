@@ -131,8 +131,9 @@ class App extends Component {
         <pre>
           <marquee>
             {
-              JSON.stringify(this.props.users)
+              JSON.stringify(this.props.vendors)
             }
+            
           </marquee>
         </pre>
       </div>

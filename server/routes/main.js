@@ -31,4 +31,10 @@ router.post('/hotline',
 // POST request for creating Inspection report
 router.post('/inspection/questions', inspectionController.inspection_create_post);
 
+router.get('/inspection/city', vendorController.info_city_get);
+
+router.get('/inspection/country', vendorController.info_country_get);
+
+router.post('/inspection/table', vendorController.vendors_find_post);
+
 module.exports = router;
